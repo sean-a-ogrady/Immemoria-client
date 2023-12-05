@@ -9,7 +9,7 @@ function NotFound() {
     };
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-[calc(100vh-64px)] bg-light-navbar dark:bg-dark-background"> {/* Adjust the min-h value based on the height of your navigation bar */}
+        <div className="flex flex-col items-center justify-center min-h-[calc(100vh-72px)] bg-light-background dark:bg-dark-background"> {/* Adjust the min-h value based on the height of your navigation bar */}
             <h1 className="text-3xl mb-3 mx-2 font-bold text-center sm:text-center text-light-primary-text dark:text-dark-primary-text">404 Page Not Found</h1>
             <p className="mb-2 mx-2 text-lg text-center sm:text-center text-light-secondary-text dark:text-dark-secondary-text">
                 You've wandered into an uncharted fragment of Immemoria. Perhaps this memory has yet to be written, or maybe it has been forgotten.

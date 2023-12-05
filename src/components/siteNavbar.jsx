@@ -45,7 +45,7 @@ function SiteNavbar({ toggleDarkMode, darkMode }) {
     };
 
     return (
-        <Disclosure as="nav" className="bg-light-navbar dark:bg-dark-navbar">
+        <Disclosure as="nav" className="bg-light-navbar dark:bg-dark-navbar h-18">
             {({ open }) => (
                 <>
                     <div className="flex items-center justify-between p-4">
