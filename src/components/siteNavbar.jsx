@@ -1,6 +1,7 @@
 import React from 'react';
 import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
+import { useNavigate } from 'react-router-dom';
 import darkModeLogo from '../assets/Immemoria-logo-dark-theme.png';
 import lightModeLogo from '../assets/Immemoria-logo-light-theme.png';
 
@@ -36,12 +37,20 @@ const DarkModeIcon = ({ darkMode }) => {
 };
 
 function SiteNavbar({ toggleDarkMode, darkMode }) {
+
+    const navigate = useNavigate();
+
+    const handleNavigation = (path) => {
+        navigate(path);
+    };
+
     return (
         <Disclosure as="nav" className="bg-light-navbar dark:bg-dark-navbar">
             {({ open }) => (
                 <>
                     <div className="flex items-center justify-between p-4">
-                        <img src={darkMode ? darkModeLogo : lightModeLogo} alt="Logo" className="h-10 w-auto" />
+                         {/* Logo with navigation to root */}
+                         <img src={darkMode ? darkModeLogo : lightModeLogo} alt="Logo" className="h-10 w-auto cursor-pointer" onClick={() => handleNavigation('/')} />
 
                         <div className="sm:hidden">
                             {/* Mobile Menu Icon */}
@@ -57,10 +66,10 @@ function SiteNavbar({ toggleDarkMode, darkMode }) {
                                 <DarkModeIcon darkMode={darkMode} />
                             </DesktopNavbarButton>
 
-                            {/* Other Buttons */}
-                            <DesktopNavbarButton>Sign Up</DesktopNavbarButton>
-                            <DesktopNavbarButton>Login</DesktopNavbarButton>
-                            <DesktopNavbarButton>Play</DesktopNavbarButton>
+                            {/* Desktop Navigation Buttons */}
+                            <DesktopNavbarButton onClick={() => handleNavigation('/signup')}>Sign Up</DesktopNavbarButton>
+                            <DesktopNavbarButton onClick={() => handleNavigation('/login')}>Login</DesktopNavbarButton>
+                            <DesktopNavbarButton onClick={() => handleNavigation('/play')}>Play</DesktopNavbarButton>
                         </div>
                     </div>
 
@@ -71,10 +80,10 @@ function SiteNavbar({ toggleDarkMode, darkMode }) {
                             <MobileNavbarButton onClick={toggleDarkMode}>
                                 <DarkModeIcon darkMode={darkMode} />
                             </MobileNavbarButton>
-                            {/* Other Mobile Buttons */}
-                            <MobileNavbarButton>Sign Up</MobileNavbarButton>
-                            <MobileNavbarButton>Login</MobileNavbarButton>
-                            <MobileNavbarButton>Play</MobileNavbarButton>
+                            {/* Mobile Navigation Buttons */}
+                            <MobileNavbarButton onClick={() => handleNavigation('/signup')}>Sign Up</MobileNavbarButton>
+                            <MobileNavbarButton onClick={() => handleNavigation('/login')}>Login</MobileNavbarButton>
+                            <MobileNavbarButton onClick={() => handleNavigation('/play')}>Play</MobileNavbarButton>
                         </div>
                     </Disclosure.Panel>
                 </>
