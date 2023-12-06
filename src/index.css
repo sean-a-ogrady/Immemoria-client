@@ -1,3 +1,35 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Scrollbar Styles */
+::-webkit-scrollbar {
+    width: 6px; /* Thinner scrollbar */
+}
+
+/* Light Theme Scrollbar */
+::-webkit-scrollbar-track {
+    background: #E1E1E1; /* Light grey for track, slightly darker than the sidebar */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #B0B0B0; /* A medium grey for the thumb */
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #969696; /* A slightly darker grey for thumb on hover */
+}
+
+/* Dark Theme Scrollbar */
+.dark ::-webkit-scrollbar-track {
+    background: #333333; /* Dark grey for track */
+}
+
+.dark ::-webkit-scrollbar-thumb {
+    background: #555555; /* Darker grey for handle */
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+    background: #787878; /* Even darker grey for handle hover */
+}
