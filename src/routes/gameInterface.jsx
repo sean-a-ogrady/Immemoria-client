@@ -3,12 +3,13 @@ import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon, ChevronUpIcon, ChevronDownIcon, CogIcon } from '@heroicons/react/24/outline';
 
 export default function GameInterface() {
+    
     const handleSettingsClick = () => {
         // Implement logic to open settings window
     };
 
     return (
-        <div className="flex flex-row min-h-[calc(100vh-72px)] bg-light-background dark:bg-dark-background">
+        <div className="flex flex-row min-h-[calc(100vh-72px)] max-h-[calc(100vh-72px)] bg-light-background dark:bg-dark-background">
             {/* Sidebar */}
             <Disclosure as="nav">
                 {({ open }) => (
@@ -22,7 +23,7 @@ export default function GameInterface() {
                         </div>
 
                         {/* Combined Sidebar Content for Mobile and Desktop */}
-                        <div className={`${open ? 'block' : 'hidden'} h-full sm:block px-4 py-2 w-[100vw] sm:w-[320px] bg-light-sidebar dark:bg-dark-sidebar z-10 flex flex-col`}>
+                        <div className={`${open ? 'block' : 'hidden'} h-full sm:block px-4 py-2 w-[100vw] sm:w-[320px] bg-light-sidebar dark:bg-dark-sidebar z-10 flex flex-col overflow-y-auto`}>
                             {/* Section header - Memories */}
                             <h2 className="py-2 text-m font-medium text-light-primary-text dark:text-dark-primary-text">Memories</h2>
 
