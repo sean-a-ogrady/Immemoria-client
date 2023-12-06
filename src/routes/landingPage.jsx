@@ -10,7 +10,7 @@ function LandingPage() {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-[calc(100vh-72px)] bg-light-background dark:bg-dark-background text-center px-4">
-          {/* ^^^ Adjust min-h based on the height of your navbar */}
+          {/* ^^^ Adjust min-h based on the height of navbar  - Currently set to 72px */}
             <div className="flex flex-col items-center justify-center space-y-6">
                 <h1 className="text-4xl font-bold text-light-primary-text dark:text-dark-primary-text">
                     Welcome to Immemoria
