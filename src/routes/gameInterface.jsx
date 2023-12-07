@@ -1,16 +1,22 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon, ChevronDownIcon, Cog6ToothIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
+import ChatMessage from '../components/chatMessage';
 
 export default function GameInterface() {
 
+    const [messages, setMessages] = useState([]);
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 640);
-
     const [isDesktopSidebarOpen, setIsDesktopSidebarOpen] = useState(true);
-
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+    const chatContainerRef = useRef(null);
     const textareaRef = useRef(null);
+
+    const getAIResponse = (userMessage) => {
+        // Simulate AI response based on the user's message
+        return "This is a simulated response.";
+    };    
 
     const adjustTextareaHeight = () => {
         const textarea = textareaRef.current;
@@ -24,6 +30,15 @@ export default function GameInterface() {
         // Apply the new height
         textarea.style.height = `${newHeight}px`;
     };
+
+    const scrollToBottom = () => {
+        const chatContainer = chatContainerRef.current;
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+    };
+
+    useEffect(() => {
+        scrollToBottom();
+    }, [messages]);
 
     useEffect(() => {
         const checkScreenSize = () => {
@@ -51,12 +66,20 @@ export default function GameInterface() {
     };
 
     const handleSubmit = () => {
-        // Logic to handle the submit action
-        console.log('Submitting:', textareaRef.current.value);
+        const userMessage = textareaRef.current.value.trim();
+        if (userMessage) {
+            // Add user message to messages array
+            setMessages(prevMessages => [...prevMessages, { text: userMessage, isOwnMessage: true }]);
+    
+            // Simulate AI response and add to messages array
+            const aiResponse = getAIResponse(userMessage);
+            setMessages(prevMessages => [...prevMessages, { text: aiResponse, isOwnMessage: false }]);
+        }
         // Reset textarea
         textareaRef.current.value = '';
-        adjustTextareaHeight(); // Adjust the height of the textarea after resetting
+        adjustTextareaHeight();
     };
+    
 
     const toggleSidebar = () => { setIsDesktopSidebarOpen(!isDesktopSidebarOpen); };
 
@@ -131,8 +154,11 @@ export default function GameInterface() {
             {/* Center Content */}
             <div className={`${(isMobileMenuOpen && isSmallScreen) ? "hidden" : ""} flex-grow flex flex-col justify-between bg-light-background dark:bg-dark-background`}>
                 {/* Chat Container */}
-                <div className="flex flex-col overflow-y-auto p-4 space-y-4">
-                    {/* Placeholder for chat messages */}
+                <div ref={chatContainerRef} className="flex flex-col overflow-y-auto p-4 space-y-4 max-w-3xl w-full mx-auto">
+                    {/* Render chat messages */}
+                    {messages.map((msg, index) => (
+                        <ChatMessage key={index} message={msg.text} isOwnMessage={msg.isOwnMessage} />
+                    ))}
                 </div>
 
                 {/* Input Area */}
@@ -154,6 +180,7 @@ export default function GameInterface() {
                     </div>
                 </div>
             </div>
+
 
         </div>
     );
