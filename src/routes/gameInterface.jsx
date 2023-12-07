@@ -16,7 +16,7 @@ export default function GameInterface() {
     const getAIResponse = (userMessage) => {
         // Simulate AI response based on the user's message
         return "This is a simulated response.";
-    };    
+    };
 
     const adjustTextareaHeight = () => {
         const textarea = textareaRef.current;
@@ -70,7 +70,7 @@ export default function GameInterface() {
         if (userMessage) {
             // Add user message to messages array
             setMessages(prevMessages => [...prevMessages, { text: userMessage, isOwnMessage: true }]);
-    
+
             // Simulate AI response and add to messages array
             const aiResponse = getAIResponse(userMessage);
             setMessages(prevMessages => [...prevMessages, { text: aiResponse, isOwnMessage: false }]);
@@ -79,7 +79,7 @@ export default function GameInterface() {
         textareaRef.current.value = '';
         adjustTextareaHeight();
     };
-    
+
 
     const toggleSidebar = () => { setIsDesktopSidebarOpen(!isDesktopSidebarOpen); };
 
@@ -154,12 +154,13 @@ export default function GameInterface() {
             {/* Center Content */}
             <div className={`${(isMobileMenuOpen && isSmallScreen) ? "hidden" : ""} flex-grow flex flex-col justify-between bg-light-background dark:bg-dark-background`}>
                 {/* Chat Container */}
-                <div ref={chatContainerRef} className="flex flex-col overflow-y-auto p-4 space-y-4 max-w-3xl w-full mx-auto">
+                <div ref={chatContainerRef} className="flex flex-col overflow-y-auto overflow-x-hidden p-4 space-y-4 max-w-3xl w-full mx-auto">
                     {/* Render chat messages */}
                     {messages.map((msg, index) => (
                         <ChatMessage key={index} message={msg.text} isOwnMessage={msg.isOwnMessage} />
                     ))}
                 </div>
+
 
                 {/* Input Area */}
                 <div className="flex items-center justify-center p-4">
