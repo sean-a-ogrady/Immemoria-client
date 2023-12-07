@@ -1,13 +1,61 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Disclosure } from '@headlessui/react';
-import { Bars3Icon, XMarkIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon, ChevronDownIcon, CogIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, XMarkIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon, ChevronDownIcon, Cog6ToothIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
 
 export default function GameInterface() {
 
+    const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 640);
+
     const [isDesktopSidebarOpen, setIsDesktopSidebarOpen] = useState(true);
+
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    const textareaRef = useRef(null);
+
+    const adjustTextareaHeight = () => {
+        const textarea = textareaRef.current;
+
+        // Temporarily shrink to get the correct scrollHeight
+        textarea.style.height = '2px'; // Set to a small height to force scrollHeight to adjust
+
+        // Calculate the necessary height (either scrollHeight or max-height)
+        const newHeight = Math.min(textarea.scrollHeight, 128); // 128px as the maximum height
+
+        // Apply the new height
+        textarea.style.height = `${newHeight}px`;
+    };
+
+    useEffect(() => {
+        const checkScreenSize = () => {
+            setIsSmallScreen(window.innerWidth < 640);
+        };
+
+        window.addEventListener('resize', checkScreenSize);
+
+        // Clean up
+        return () => {
+            window.removeEventListener('resize', checkScreenSize);
+        };
+    }, []);
+
 
     const handleSettingsClick = () => {
         // Implement logic to open settings window
+    };
+
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault(); // Prevents the default action (new line)
+            handleSubmit(); // Calls your submit function
+        }
+    };
+
+    const handleSubmit = () => {
+        // Logic to handle the submit action
+        console.log('Submitting:', textareaRef.current.value);
+        // Reset textarea
+        textareaRef.current.value = '';
+        adjustTextareaHeight(); // Adjust the height of the textarea after resetting
     };
 
     const toggleSidebar = () => { setIsDesktopSidebarOpen(!isDesktopSidebarOpen); };
@@ -15,24 +63,28 @@ export default function GameInterface() {
     const sidebarWidth = isDesktopSidebarOpen ? '320px' : '0px';
 
     return (
-        <div className="flex flex-row min-h-[calc(100vh-72px)] max-h-[calc(100vh-72px)] bg-light-background dark:bg-dark-background">
+        <div className="flex flex-row min-h-[calc(100vh-72px)] max-h-[calc(100vh-72px)] border-t border-light-primary-text dark:border-dark-primary-text bg-light-background dark:bg-dark-background">
             {/* Sidebar */}
             <Disclosure as="nav">
                 {({ open }) => (
                     <>
                         {/* Mobile Sidebar Toggle */}
-                        <div className="sm:hidden fixed bottom-4 right-4 z-20">
-                            <Disclosure.Button className="p-2 rounded-full bg-light-accent dark:bg-dark-accent">
+                        <div className={`${open ? "bottom-4" : "bottom-20"} sm:hidden fixed right-4 z-20`}>
+                            <Disclosure.Button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                                className="p-2 rounded-full text-light-primary-text dark:text-dark-primary-text hover:bg-light-secondary-text dark:hover:bg-dark-secondary-text transition-colors duration-200">
                                 <span className="sr-only">Toggle sidebar</span>
                                 {open ? <XMarkIcon className="h-6 w-6" /> : <Bars3Icon className="h-6 w-6" />}
                             </Disclosure.Button>
                         </div>
 
+
                         {/* Combined Sidebar Content for Mobile and Desktop */}
+                        {/* Some ugly code I wrote in order to handle window resizing for the menu */}
                         <div
                             className={`${open ? 'block' : 'hidden'} h-full sm:block px-4 py-2
                                 ${isDesktopSidebarOpen ? 'sm:w-[320px] sm:px-4 sm:py-2' : 'sm:w-0 sm:px-0 sm:py-0'} 
-                                w-[100vw] bg-light-sidebar dark:bg-dark-sidebar z-10 flex flex-col overflow-y-auto`}
+                                w-[100vw] bg-light-sidebar dark:bg-dark-sidebar z-10 flex flex-col overflow-y-auto
+                                ${isSmallScreen ? "" : "border-r border-light-primary-text dark:border-dark-primary-text"}`}
                             style={{ transition: 'width 0.3s' }}
                         >
                             {/* Section header - Memories */}
@@ -57,12 +109,13 @@ export default function GameInterface() {
                                 onClick={handleSettingsClick}
                                 className="flex items-center w-full mb-3 text-left font-semibold text-light-primary-text dark:text-dark-primary-text hover:text-light-accent dark:hover:text-dark-accent transition-colors duration-200"
                             >
-                                <CogIcon className="h-5 w-5 mr-2" />
+                                <Cog6ToothIcon className="h-5 w-5 mr-2" />
                                 Settings
                             </button>
                         </div>
                     </>
                 )}
+
             </Disclosure>
 
             {/* Sidebar Toggle Button for Desktop */}
@@ -76,9 +129,32 @@ export default function GameInterface() {
             </div>
 
             {/* Center Content */}
-            <div className="flex-grow flex justify-center">
-                {/* Center content here */}
+            <div className={`${(isMobileMenuOpen && isSmallScreen) ? "hidden" : ""} flex-grow flex flex-col justify-between bg-light-background dark:bg-dark-background`}>
+                {/* Chat Container */}
+                <div className="flex flex-col overflow-y-auto p-4 space-y-4">
+                    {/* Placeholder for chat messages */}
+                </div>
+
+                {/* Input Area */}
+                <div className="flex items-center justify-center p-4">
+                    <div className="flex items-center max-w-3xl w-full">
+                        <textarea
+                            ref={textareaRef}
+                            onChange={adjustTextareaHeight}
+                            onKeyDown={handleKeyPress}
+                            placeholder="Type your message..."
+                            className="flex-grow resize-none p-2 rounded-md border border-light-secondary-text dark:border-dark-secondary-text bg-light-background dark:bg-dark-background text-light-primary-text dark:text-dark-primary-text overflow-auto h-10 max-h-32"
+                        />
+                        <button
+                            onClick={handleSubmit}
+                            className="ml-2 flex items-center justify-center p-2 rounded-md text-light-primary-text dark:text-dark-primary-text hover:bg-light-secondary-text dark:hover:bg-dark-secondary-text transition-colors duration-200"
+                        >
+                            <PaperAirplaneIcon className="h-6 w-6" />
+                        </button>
+                    </div>
+                </div>
             </div>
+
         </div>
     );
 }
