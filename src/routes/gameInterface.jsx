@@ -9,6 +9,11 @@ export default function GameInterface() {
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 640);
     const [isDesktopSidebarOpen, setIsDesktopSidebarOpen] = useState(true);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [openSections, setOpenSections] = useState({
+        Character: false,
+        Inventory: false,
+        Map: false
+    });
 
     const chatContainerRef = useRef(null);
     const textareaRef = useRef(null);
@@ -80,10 +85,17 @@ export default function GameInterface() {
         adjustTextareaHeight();
     };
 
+    const handleSectionToggle = (sectionTitle) => {
+        setOpenSections(prev => ({
+            ...prev,
+            [sectionTitle]: !prev[sectionTitle]
+        }));
+    };
 
     const toggleSidebar = () => { setIsDesktopSidebarOpen(!isDesktopSidebarOpen); };
 
-    const sidebarWidth = isDesktopSidebarOpen ? '320px' : '0px';
+    const isAnySectionOpen = Object.values(openSections).some(value => value);
+    const sidebarSectionOpenWidthToggler = isAnySectionOpen ? '420px' : '320px';
 
     return (
         <div className="flex flex-row min-h-[calc(100vh-72px)] max-h-[calc(100vh-72px)] border-t border-light-primary-text dark:border-dark-primary-text bg-light-background dark:bg-dark-background">
@@ -104,10 +116,10 @@ export default function GameInterface() {
                         {/* Combined Sidebar Content for Mobile and Desktop */}
                         {/* Some ugly code I wrote in order to handle window resizing for the menu */}
                         <div
-                            className={`${open ? 'block' : 'hidden'} h-full sm:block px-4 py-2
-                                ${isDesktopSidebarOpen ? 'sm:w-[320px] sm:px-4 sm:py-2' : 'sm:w-0 sm:px-0 sm:py-0'} 
+                            className={`${open ? 'block' : 'hidden'} h-full sm:block px-4 py-2 sm:max-w-[420px]
+                                ${isDesktopSidebarOpen ? `sm:w-[${sidebarSectionOpenWidthToggler}] sm:px-4` : 'sm:w-0 sm:px-0'} 
                                 w-[100vw] bg-light-sidebar dark:bg-dark-sidebar z-10 flex flex-col overflow-y-auto
-                                ${isSmallScreen ? "" : "border-r border-light-primary-text dark:border-dark-primary-text"}`}
+                                ${(isSmallScreen || !isDesktopSidebarOpen) ? "" : "border-r border-light-primary-text dark:border-dark-primary-text"}`}
                             style={{ transition: 'width 0.3s' }}
                         >
                             {/* Section header - Memories */}
@@ -116,13 +128,13 @@ export default function GameInterface() {
                             <hr className="my-4 border-light-secondary-text dark:border-dark-secondary-text" />
 
                             {/* Character */}
-                            <SidebarSection title="Character" />
+                            <SidebarSection title="Character" handleSectionToggle={handleSectionToggle} />
 
                             {/* Inventory */}
-                            <SidebarSection title="Inventory" />
+                            <SidebarSection title="Inventory" handleSectionToggle={handleSectionToggle} />
 
                             {/* Map */}
-                            <SidebarSection title="Map" />
+                            <SidebarSection title="Map" handleSectionToggle={handleSectionToggle} />
 
                             {/* dividing line */}
                             <hr className="my-4 border-light-secondary-text dark:border-dark-secondary-text" />
@@ -142,7 +154,7 @@ export default function GameInterface() {
             </Disclosure>
 
             {/* Sidebar Toggle Button for Desktop */}
-            <div className="hidden sm:flex sm:absolute sm:left-[320px] sm:top-1/2 sm:-translate-y-1/2 sm:translate-x-1 z-20" style={{ left: isDesktopSidebarOpen ? '320px' : '0px', transition: 'left 0.3s' }}>
+            <div className={`hidden sm:flex sm:absolute sm:left-[${sidebarSectionOpenWidthToggler}] sm:top-1/2 sm:-translate-y-1/2 sm:translate-x-1 z-20`} style={{ left: isDesktopSidebarOpen ? sidebarSectionOpenWidthToggler : '0px', transition: 'left 0.3s' }}>
                 <button
                     onClick={toggleSidebar}
                     className="text-light-primary-text dark:text-dark-primary-text hover:text-light-accent dark:hover:text-dark-accent transition-colors duration-200"
@@ -187,11 +199,11 @@ export default function GameInterface() {
     );
 }
 
-const SidebarSection = ({ title }) => (
+const SidebarSection = ({ title, handleSectionToggle }) => (
     <Disclosure>
         {({ open }) => (
             <>
-                <Disclosure.Button className="flex justify-between w-full py-2 text-sm font-medium text-left text-light-primary-text dark:text-dark-primary-text hover:text-light-accent dark:hover:text-dark-accent transition-colors duration-200">
+                <Disclosure.Button onClick={() => handleSectionToggle(title)} className="flex justify-between w-full py-2 text-sm font-medium text-left text-light-primary-text dark:text-dark-primary-text hover:text-light-accent dark:hover:text-dark-accent transition-colors duration-200">
                     {title}
                     <span className="ml-2">
                         {open ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronDownIcon className="h-5 w-5" />}
