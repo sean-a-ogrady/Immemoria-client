@@ -76,9 +76,23 @@ export default function GameInterface() {
             // Add user message to messages array
             setMessages(prevMessages => [...prevMessages, { text: userMessage, isOwnMessage: true }]);
 
-            // Simulate AI response and add to messages array
-            const aiResponse = getAIResponse(userMessage);
-            setMessages(prevMessages => [...prevMessages, { text: aiResponse, isOwnMessage: false }]);
+            // Get example AI response
+            fetch('http://localhost:5000/ai', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    prompt: userMessage
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                setMessages(prevMessages => [...prevMessages, { text: data.response, isOwnMessage: false }]);
+            })
+            
+            // const aiResponse = getAIResponse(userMessage);
+            // setMessages(prevMessages => [...prevMessages, { text: aiResponse, isOwnMessage: false }]);
         }
         // Reset textarea
         textareaRef.current.value = '';

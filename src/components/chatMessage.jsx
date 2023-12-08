@@ -1,6 +1,8 @@
 // ChatMessage.jsx
 import React from 'react';
 
+// TODO: Render the message as markdown
+
 const ChatMessage = ({ message, isOwnMessage }) => {
   const messageContainerStyle = isOwnMessage
     ? "self-end text-right mr-2" // Right margin for user messages
