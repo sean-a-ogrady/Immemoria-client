@@ -1,7 +1,4 @@
-// ChatMessage.jsx
 import React from 'react';
-
-// TODO: Render the message as markdown
 
 const ChatMessage = ({ message, isOwnMessage }) => {
   const messageContainerStyle = isOwnMessage
@@ -14,8 +11,10 @@ const ChatMessage = ({ message, isOwnMessage }) => {
 
   return (
     <div className={`w-full ${messageContainerStyle} max-w-[75%]`}>
-      <div className={`inline-block px-4 py-2 rounded-lg ${messageBubbleStyle} break-all`}>
-        {message}
+      <div className={`inline-block px-4 py-2 rounded-lg ${messageBubbleStyle} break-words overflow-hidden`}>
+        <p className="whitespace-normal">
+          {message}
+        </p>
       </div>
     </div>
   );
