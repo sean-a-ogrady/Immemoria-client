@@ -23,6 +23,9 @@ export default {
         'light-navbar': '#EFEFEF',
         'light-sidebar': '#BDC3C7',
       },
+      fontFamily: {
+        garamond: ['Cormorant Garamond', 'serif']
+      },
     },
   },
   plugins: [],

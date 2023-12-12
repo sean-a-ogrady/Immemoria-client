@@ -190,7 +190,7 @@ export default function GameInterface() {
             {/* Center Content */}
             <div className={`${(isMobileMenuOpen && isSmallScreen) ? "hidden" : ""} flex-grow flex flex-col justify-between bg-light-background dark:bg-dark-background`}>
                 {/* Chat Container */}
-                <div ref={chatContainerRef} className="flex flex-col overflow-y-auto overflow-x-hidden p-4 space-y-4 max-w-3xl w-full mx-auto">
+                <div ref={chatContainerRef} className="flex flex-col overflow-y-auto overflow-x-hidden p-y-4 px-7 max-w-3xl w-full mx-auto font-garamond">
                     {/* Render chat messages */}
                     {messages.map((msg, index) => (
                         <ChatMessage key={index} message={msg.text} isOwnMessage={msg.isOwnMessage} />
@@ -233,7 +233,7 @@ const SidebarSection = ({ title, handleSectionToggle }) => (
                         {open ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronDownIcon className="h-5 w-5" />}
                     </span>
                 </Disclosure.Button>
-                <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-light-secondary-text dark:text-dark-secondary-text">
+                <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-light-secondary-text dark:text-dark-secondary-text whitespace-nowrap">
                     {/* Placeholder content for each section */}
                     Content for {title}
                 </Disclosure.Panel>

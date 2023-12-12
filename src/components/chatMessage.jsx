@@ -75,7 +75,7 @@ const ChatMessage = ({ message, isOwnMessage }) => {
     };
 
 
-    const messageContainerStyle = "my-2 mx-2"; // Margin for both user and AI messages
+    const messageContainerStyle = "my-2"; // Margin for both user and AI messages
     const messageBubbleStyle = isOwnMessage
         ? "bg-light-navbar dark:bg-dark-navbar" // Slightly lighter shade for user messages
         : "bg-light-navbar dark:bg-dark-navbar"; // Same color as the background for AI messages  
@@ -84,7 +84,7 @@ const ChatMessage = ({ message, isOwnMessage }) => {
         <div className={`w-full ${messageContainerStyle}`}>
             <div className={`block w-full px-4 py-2 rounded-lg ${messageBubbleStyle} overflow-hidden`}>
                 {/* Render the message as markdown */}
-                <ReactMarkdown components={components}>{(isOwnMessage ? "**Player:**" : "**System:**") + "\n" + message}</ReactMarkdown>
+                <ReactMarkdown components={components}>{(isOwnMessage ? "**Player:**" : "**System:** ") + "\n\n" + message}</ReactMarkdown>
             </div>
         </div>
     );
