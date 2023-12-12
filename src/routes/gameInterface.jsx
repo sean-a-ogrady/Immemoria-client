@@ -9,6 +9,7 @@ export default function GameInterface() {
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 640);
     const [isDesktopSidebarOpen, setIsDesktopSidebarOpen] = useState(true);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [summary, setSummary] = useState("");
     const [openSections, setOpenSections] = useState({
         Character: false,
         Inventory: false,
@@ -62,6 +63,7 @@ export default function GameInterface() {
     const handleSettingsClick = () => {
         // For now, this will reset the conversation history
         setMessages([]);
+        setSummary("");
         fetch('http://localhost:5000/ai/reset', {
             method: 'POST',
             headers: {
@@ -72,6 +74,7 @@ export default function GameInterface() {
         .then(response => response.json())
         .then(data => {
             console.log(data);
+            alert("Conversation reset.")
         })
     };
 
@@ -101,6 +104,7 @@ export default function GameInterface() {
             .then(response => response.json())
             .then(data => {
                 setMessages(prevMessages => [...prevMessages, { text: data.response, isOwnMessage: false }]);
+                setSummary(data.summary);
             })
             
             // const aiResponse = getAIResponse(userMessage);
@@ -155,7 +159,7 @@ export default function GameInterface() {
                             <hr className="my-4 border-light-secondary-text dark:border-dark-secondary-text" />
 
                             {/* Summary */}
-                            <SidebarSection title="Summary" handleSectionToggle={handleSectionToggle} />
+                            <SidebarSection title="Summary" handleSectionToggle={handleSectionToggle} content={summary} />
 
                             {/* Locations */}
                             <SidebarSection title="Locations" handleSectionToggle={handleSectionToggle} />
@@ -190,7 +194,7 @@ export default function GameInterface() {
             {/* Center Content */}
             <div className={`${(isMobileMenuOpen && isSmallScreen) ? "hidden" : ""} flex-grow flex flex-col justify-between bg-light-background dark:bg-dark-background`}>
                 {/* Chat Container */}
-                <div ref={chatContainerRef} className="flex flex-col overflow-y-auto overflow-x-hidden p-y-4 px-7 max-w-3xl w-full mx-auto font-garamond">
+                <div ref={chatContainerRef} className="flex flex-col overflow-y-auto overflow-x-hidden py-3 px-7 max-w-3xl w-full mx-auto">
                     {/* Render chat messages */}
                     {messages.map((msg, index) => (
                         <ChatMessage key={index} message={msg.text} isOwnMessage={msg.isOwnMessage} />
@@ -223,7 +227,7 @@ export default function GameInterface() {
     );
 }
 
-const SidebarSection = ({ title, handleSectionToggle }) => (
+const SidebarSection = ({ title, content, handleSectionToggle }) => (
     <Disclosure>
         {({ open }) => (
             <>
@@ -233,9 +237,9 @@ const SidebarSection = ({ title, handleSectionToggle }) => (
                         {open ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronDownIcon className="h-5 w-5" />}
                     </span>
                 </Disclosure.Button>
-                <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-light-secondary-text dark:text-dark-secondary-text whitespace-nowrap">
+                <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-light-secondary-text dark:text-dark-secondary-text">
                     {/* Placeholder content for each section */}
-                    Content for {title}
+                    {content}
                 </Disclosure.Panel>
             </>
         )}
