@@ -134,7 +134,7 @@ export default function GameInterface() {
                                 ${isDesktopSidebarOpen ? `sm:w-[${sidebarSectionOpenWidthToggler}] sm:px-4` : 'sm:w-0 sm:px-0'} 
                                 w-[100vw] bg-light-sidebar dark:bg-dark-sidebar z-10 flex flex-col overflow-y-auto
                                 ${(isSmallScreen || !isDesktopSidebarOpen) ? "" : "border-r border-light-primary-text dark:border-dark-primary-text"}`}
-                            style={{ transition: 'width 0.3s' }}
+                            style={{width: isDesktopSidebarOpen ? sidebarSectionOpenWidthToggler : '0px', transition: 'width 0.3s'}}
                         >
                             {/* Section header - Memories */}
                             <h2 className="py-2 text-m font-medium text-light-primary-text dark:text-dark-primary-text">Memories</h2>
