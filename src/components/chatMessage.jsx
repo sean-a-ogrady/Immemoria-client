@@ -75,21 +75,16 @@ const ChatMessage = ({ message, isOwnMessage }) => {
     };
 
 
-    const messageContainerStyle = isOwnMessage
-        ? "self-end text-right mr-2" // Right margin for user messages
-        : "self-start text-left ml-2"; // Left margin for AI messages
-
+    const messageContainerStyle = "my-2 mx-2"; // Margin for both user and AI messages
     const messageBubbleStyle = isOwnMessage
-        ? "bg-light-interactive dark:bg-dark-interactive text-light-background dark:text-dark-background"
-        : "bg-light-secondary-text dark:bg-dark-secondary-text text-dark-primary-text dark:text-dark-primary-text";
+        ? "bg-light-navbar dark:bg-dark-navbar" // Slightly lighter shade for user messages
+        : "bg-light-navbar dark:bg-dark-navbar"; // Same color as the background for AI messages  
 
     return (
-        <div className={`w-full ${messageContainerStyle} max-w-[75%]`}>
-            <div className={`inline-block px-4 py-2 rounded-lg ${messageBubbleStyle} break-words overflow-hidden`}>
-                {/* ReactMarkdown is used here to render the markdown content */}
-                <ReactMarkdown components={components}>
-                    {message}
-                </ReactMarkdown>
+        <div className={`w-full ${messageContainerStyle}`}>
+            <div className={`block w-full px-4 py-2 rounded-lg ${messageBubbleStyle} overflow-hidden`}>
+                {/* Render the message as markdown */}
+                <ReactMarkdown components={components}>{(isOwnMessage ? "**Player:**" : "**System:**") + "\n" + message}</ReactMarkdown>
             </div>
         </div>
     );

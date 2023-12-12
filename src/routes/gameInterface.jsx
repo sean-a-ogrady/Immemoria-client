@@ -60,7 +60,19 @@ export default function GameInterface() {
 
 
     const handleSettingsClick = () => {
-        // Implement logic to open settings window
+        // For now, this will reset the conversation history
+        setMessages([]);
+        fetch('http://localhost:5000/ai/reset', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+        })
     };
 
     const handleKeyPress = (event) => {
@@ -133,22 +145,20 @@ export default function GameInterface() {
                             className={`${open ? 'block' : 'hidden'} h-full sm:block px-4 py-2 sm:max-w-[420px]
                                 ${isDesktopSidebarOpen ? `sm:w-[${sidebarSectionOpenWidthToggler}] sm:px-4` : 'sm:w-0 sm:px-0'} 
                                 w-[100vw] bg-light-sidebar dark:bg-dark-sidebar z-10 flex flex-col overflow-y-auto
-                                ${(isSmallScreen || !isDesktopSidebarOpen) ? "" : "border-r border-light-primary-text dark:border-dark-primary-text"}`}
-                            style={{width: isDesktopSidebarOpen ? sidebarSectionOpenWidthToggler : '0px', transition: 'width 0.3s'}}
+                                ${(isSmallScreen || !isDesktopSidebarOpen) ? "" : "border-r border-light-primary-text dark:border-dark-primary-text"}
+                                transition-all ease-in-out duration-300`}
+                            style={{width: isDesktopSidebarOpen ? sidebarSectionOpenWidthToggler : '0px'}}
                         >
                             {/* Section header - Memories */}
                             <h2 className="py-2 text-m font-medium text-light-primary-text dark:text-dark-primary-text">Memories</h2>
 
                             <hr className="my-4 border-light-secondary-text dark:border-dark-secondary-text" />
 
-                            {/* Character */}
-                            <SidebarSection title="Character" handleSectionToggle={handleSectionToggle} />
+                            {/* Summary */}
+                            <SidebarSection title="Summary" handleSectionToggle={handleSectionToggle} />
 
-                            {/* Inventory */}
-                            <SidebarSection title="Inventory" handleSectionToggle={handleSectionToggle} />
-
-                            {/* Map */}
-                            <SidebarSection title="Map" handleSectionToggle={handleSectionToggle} />
+                            {/* Locations */}
+                            <SidebarSection title="Locations" handleSectionToggle={handleSectionToggle} />
 
                             {/* dividing line */}
                             <hr className="my-4 border-light-secondary-text dark:border-dark-secondary-text" />
@@ -156,10 +166,10 @@ export default function GameInterface() {
                             {/* Settings */}
                             <button
                                 onClick={handleSettingsClick}
-                                className="flex items-center w-full mb-3 text-left font-semibold text-light-primary-text dark:text-dark-primary-text hover:text-light-accent dark:hover:text-dark-accent transition-colors duration-200"
+                                className="flex items-center w-full mb-3 text-left font-semibold text-light-primary-text dark:text-dark-primary-text hover:text-light-accent dark:hover:text-dark-accent transition-colors duration-200 whitespace-nowrap"
                             >
-                                <Cog6ToothIcon className="h-5 w-5 mr-2" />
-                                Settings
+                                <Cog6ToothIcon className="h-5 w-5 mr-2 min-w-[20px]" />
+                                Reset Conversation
                             </button>
                         </div>
                     </>
@@ -168,7 +178,7 @@ export default function GameInterface() {
             </Disclosure>
 
             {/* Sidebar Toggle Button for Desktop */}
-            <div className={`hidden sm:flex sm:absolute sm:left-[${sidebarSectionOpenWidthToggler}] sm:top-1/2 sm:-translate-y-1/2 sm:translate-x-1 z-20`} style={{ left: isDesktopSidebarOpen ? sidebarSectionOpenWidthToggler : '0px', transition: 'left 0.3s' }}>
+            <div className={`hidden sm:flex sm:absolute sm:left-[${sidebarSectionOpenWidthToggler}] sm:top-1/2 sm:-translate-y-1/2 sm:translate-x-1 z-20 transition-all ease-in-out duration-300`} style={{ left: isDesktopSidebarOpen ? sidebarSectionOpenWidthToggler : '0px'}}>
                 <button
                     onClick={toggleSidebar}
                     className="text-light-primary-text dark:text-dark-primary-text hover:text-light-accent dark:hover:text-dark-accent transition-colors duration-200"
