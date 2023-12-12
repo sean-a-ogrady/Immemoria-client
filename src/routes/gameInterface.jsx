@@ -109,7 +109,7 @@ export default function GameInterface() {
     const toggleSidebar = () => { setIsDesktopSidebarOpen(!isDesktopSidebarOpen); };
 
     const isAnySectionOpen = Object.values(openSections).some(value => value);
-    const sidebarSectionOpenWidthToggler = isAnySectionOpen ? '420px' : '320px';
+    const sidebarSectionOpenWidthToggler = isSmallScreen ? "100vw" : (isAnySectionOpen ? '420px' : '320px');
 
     return (
         <div className="flex flex-row min-h-[calc(100vh-72px)] max-h-[calc(100vh-72px)] border-t border-light-primary-text dark:border-dark-primary-text bg-light-background dark:bg-dark-background">
