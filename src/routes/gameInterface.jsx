@@ -98,7 +98,8 @@ export default function GameInterface() {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    prompt: userMessage
+                    prompt: userMessage,
+                    initialize: messages.length === 0
                 })
             })
             .then(response => response.json())
