@@ -209,7 +209,7 @@ export default function GameInterface() {
                             ref={textareaRef}
                             onChange={adjustTextareaHeight}
                             onKeyDown={handleKeyPress}
-                            placeholder="Type your message..."
+                            placeholder="Type your action (experimental)"
                             className="flex-grow resize-none p-2 rounded-md border border-light-secondary-text dark:border-dark-secondary-text bg-light-background dark:bg-dark-background text-light-primary-text dark:text-dark-primary-text overflow-auto h-10 max-h-32"
                         />
                         <button
