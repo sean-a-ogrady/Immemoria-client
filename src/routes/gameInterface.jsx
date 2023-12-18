@@ -9,7 +9,7 @@ export default function GameInterface() {
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 640);
     const [isDesktopSidebarOpen, setIsDesktopSidebarOpen] = useState(true);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [summary, setSummary] = useState("");
+    const [summary, setSummary] = useState([]);
     const [openSections, setOpenSections] = useState({
         Character: false,
         Inventory: false,
@@ -63,7 +63,7 @@ export default function GameInterface() {
     const handleSettingsClick = () => {
         // For now, this will reset the conversation history
         setMessages([]);
-        setSummary("");
+        setSummary([]);
         fetch('http://localhost:5000/ai/reset', {
             method: 'POST',
             headers: {
@@ -103,7 +103,8 @@ export default function GameInterface() {
             })
             .then(response => response.json())
             .then(data => {
-                setMessages(prevMessages => [...prevMessages, { text: data.response, isOwnMessage: false }]);
+                setMessages(prevMessages => [...prevMessages, { text: data.description, isOwnMessage: false }]);
+                // setPlayerActions(data.response.player_actions);
                 setSummary(data.summary);
             })
             
