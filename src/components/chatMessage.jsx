@@ -81,8 +81,6 @@ const ChatMessage = ({ message, isOwnMessage, actions, handleActionClick, opacit
         tbody: ({ node, ...props }) => <tbody className={markdownStyles.tbody} {...props} />,
     };
 
-    
-    const actionContainerStyle = `transition-all duration-300 ${showActions ? "opacity-100" : "opacity-0 h-0"}`;
     const messageContainerStyle = `my-2 animate-fade-in`;
     const messageBubbleStyle = isOwnMessage
         ? "bg-light-navbar dark:bg-dark-navbar" // Slightly lighter shade for user messages
