@@ -1,7 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 
-const ChatMessage = ({ message, isOwnMessage }) => {
+const ChatMessage = ({ message, isOwnMessage, actions, handleActionClick, opacity }) => {
+
+    const [showActions, setShowActions] = useState(true);
+
+    const onActionClick = (actionText) => {
+        setShowActions(false); // Collapse the buttons
+        handleActionClick(actionText); // Call the passed in event
+    };
 
     const markdownStyles = {
         // Headers
@@ -74,17 +81,35 @@ const ChatMessage = ({ message, isOwnMessage }) => {
         tbody: ({ node, ...props }) => <tbody className={markdownStyles.tbody} {...props} />,
     };
 
-
-    const messageContainerStyle = "my-2"; // Margin for both user and AI messages
+    
+    const actionContainerStyle = `transition-all duration-300 ${showActions ? "opacity-100" : "opacity-0 h-0"}`;
+    const messageContainerStyle = `my-2 animate-fade-in`;
     const messageBubbleStyle = isOwnMessage
         ? "bg-light-navbar dark:bg-dark-navbar" // Slightly lighter shade for user messages
         : "bg-light-navbar dark:bg-dark-navbar"; // Same color as the background for AI messages  
-
+    
     return (
         <div className={`w-full ${messageContainerStyle}`}>
-            <div className={`block w-full px-4 py-2 rounded-lg ${messageBubbleStyle} overflow-hidden`}>
+            <div className={`block w-full px-4 py-2 rounded-lg ${messageBubbleStyle} overflow-hidden`} style={{opacity: opacity}}>
                 {/* Render the message as markdown */}
-                <ReactMarkdown components={components}>{(isOwnMessage ? "**Player:**" : "**System:** ") + "\n\n" + message}</ReactMarkdown>
+                <ReactMarkdown components={components}>
+                    {(isOwnMessage ? "**Player:**" : "**System:** ") + "\n\n" + message}
+                </ReactMarkdown>
+
+                {/* Render action buttons if actions are provided, it's an AI message, and showActions is true */}
+                {!isOwnMessage && actions && showActions && (
+                    <div className="flex flex-col justify-center mt-4">
+                        {Object.entries(actions).reverse().map(([actionType, actionText]) => (
+                            <button
+                                key={actionType}
+                                className="mb-2 px-4 py-2 text-light-primary-text dark:text-dark-primary-text border border-light-primary-text dark:border-dark-primary-text hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md transition-colors duration-200 text-left"
+                                onClick={() => onActionClick(actionText)}
+                            >
+                                <strong>{actionType.charAt(0).toUpperCase() + actionType.slice(1)}:</strong> {actionText}
+                            </button>
+                        ))}
+                    </div>
+                )}
             </div>
         </div>
     );

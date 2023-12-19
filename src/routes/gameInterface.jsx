@@ -16,13 +16,11 @@ export default function GameInterface() {
         Map: false
     });
 
+    // Ref used to access the chat container element.
     const chatContainerRef = useRef(null);
+    // Ref used to access the textarea element.
     const textareaRef = useRef(null);
 
-    const getAIResponse = (userMessage) => {
-        // Simulate AI response based on the user's message
-        return "This is a simulated response.";
-    };
 
     const adjustTextareaHeight = () => {
         const textarea = textareaRef.current;
@@ -40,6 +38,12 @@ export default function GameInterface() {
     const scrollToBottom = () => {
         const chatContainer = chatContainerRef.current;
         chatContainer.scrollTop = chatContainer.scrollHeight;
+    };
+
+    const calculateOpacity = index => {
+        const totalMessages = messages.length;
+        const age = totalMessages - index;
+        return (100 - age * 5 + 5)/100;
     };
 
     useEffect(() => {
@@ -71,11 +75,11 @@ export default function GameInterface() {
             },
             body: JSON.stringify({})
         })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            alert("Conversation reset.")
-        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                alert("Conversation reset.")
+            })
     };
 
     const handleKeyPress = (event) => {
@@ -85,11 +89,18 @@ export default function GameInterface() {
         }
     };
 
-    const handleSubmit = () => {
-        const userMessage = textareaRef.current.value.trim();
+    const handleSubmit = (actionText = null) => {
+        const wasActionClicked = actionText !== null;
+        // If the user clicked an action button, use the action text instead of the textarea value
+        const userMessage = wasActionClicked ? actionText : textareaRef.current.value.trim();
         if (userMessage) {
             // Add user message to messages array
-            setMessages(prevMessages => [...prevMessages, { text: userMessage, isOwnMessage: true }]);
+            setMessages(prevMessages => {
+                // Create a new array with the new message
+                const updatedMessages = [...prevMessages, { text: userMessage, isOwnMessage: true }];
+                // Keep only the last 10 messages
+                return updatedMessages.slice(-10);
+            });
 
             // Get example AI response
             fetch('http://localhost:5000/ai', {
@@ -101,19 +112,20 @@ export default function GameInterface() {
                     prompt: userMessage
                 })
             })
-            .then(response => response.json())
-            .then(data => {
-                setMessages(prevMessages => [...prevMessages, { text: data.description, isOwnMessage: false }]);
-                // setPlayerActions(data.response.player_actions);
-                setSummary(data.summary);
-            })
-            
-            // const aiResponse = getAIResponse(userMessage);
-            // setMessages(prevMessages => [...prevMessages, { text: aiResponse, isOwnMessage: false }]);
+                .then(response => response.json())
+                .then(data => {
+                    setMessages(prevMessages => {
+                        const updatedMessages = [...prevMessages, { text: data.description, isOwnMessage: false, actions: data.actions }]
+                        return updatedMessages.slice(-10);
+                    });
+                    setSummary(data.summary);
+                })
         }
-        // Reset textarea
-        textareaRef.current.value = '';
-        adjustTextareaHeight();
+        // Reset textarea if text field was used
+        if (!wasActionClicked) {
+            textareaRef.current.value = '';
+            adjustTextareaHeight();
+        }
     };
 
     const handleSectionToggle = (sectionTitle) => {
@@ -139,7 +151,7 @@ export default function GameInterface() {
                             <Disclosure.Button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                                 className="p-2 rounded-full text-light-primary-text dark:text-dark-primary-text hover:bg-light-secondary-text dark:hover:bg-dark-secondary-text transition-colors duration-200">
                                 <span className="sr-only">Toggle sidebar</span>
-                                {open ? <XMarkIcon className="h-6 w-6" /> : <Bars3Icon className="h-6 w-6" />}
+                                {open ? <XMarkIcon className="h-6 w-6" /> : <ChevronUpIcon className="h-6 w-6" />}
                             </Disclosure.Button>
                         </div>
 
@@ -152,7 +164,7 @@ export default function GameInterface() {
                                 w-[100vw] bg-light-sidebar dark:bg-dark-sidebar z-10 flex flex-col overflow-y-auto
                                 ${(isSmallScreen || !isDesktopSidebarOpen) ? "" : "border-r border-light-primary-text dark:border-dark-primary-text"}
                                 transition-all ease-in-out duration-300`}
-                            style={{width: isDesktopSidebarOpen ? sidebarSectionOpenWidthToggler : '0px'}}
+                            style={{ width: isDesktopSidebarOpen ? sidebarSectionOpenWidthToggler : '0px' }}
                         >
                             {/* Section header - Memories */}
                             <h2 className="py-2 text-m font-medium text-light-primary-text dark:text-dark-primary-text">Memories</h2>
@@ -161,9 +173,6 @@ export default function GameInterface() {
 
                             {/* Summary */}
                             <SidebarSection title="Summary" handleSectionToggle={handleSectionToggle} content={summary} />
-
-                            {/* Locations */}
-                            <SidebarSection title="Locations" handleSectionToggle={handleSectionToggle} />
 
                             {/* dividing line */}
                             <hr className="my-4 border-light-secondary-text dark:border-dark-secondary-text" />
@@ -183,7 +192,7 @@ export default function GameInterface() {
             </Disclosure>
 
             {/* Sidebar Toggle Button for Desktop */}
-            <div className={`hidden sm:flex sm:absolute sm:left-[${sidebarSectionOpenWidthToggler}] sm:top-1/2 sm:-translate-y-1/2 sm:translate-x-1 z-20 transition-all ease-in-out duration-300`} style={{ left: isDesktopSidebarOpen ? sidebarSectionOpenWidthToggler : '0px'}}>
+            <div className={`hidden sm:flex sm:absolute sm:left-[${sidebarSectionOpenWidthToggler}] sm:top-1/2 sm:-translate-y-1/2 sm:translate-x-1 z-20 transition-all ease-in-out duration-300`} style={{ left: isDesktopSidebarOpen ? sidebarSectionOpenWidthToggler : '0px' }}>
                 <button
                     onClick={toggleSidebar}
                     className="text-light-primary-text dark:text-dark-primary-text hover:text-light-accent dark:hover:text-dark-accent transition-colors duration-200"
@@ -198,8 +207,16 @@ export default function GameInterface() {
                 <div ref={chatContainerRef} className="flex flex-col overflow-y-auto overflow-x-hidden py-3 px-7 max-w-3xl w-full mx-auto">
                     {/* Render chat messages */}
                     {messages.map((msg, index) => (
-                        <ChatMessage key={index} message={msg.text} isOwnMessage={msg.isOwnMessage} />
+                        <ChatMessage
+                            key={index}
+                            message={msg.text}
+                            isOwnMessage={msg.isOwnMessage}
+                            actions={msg.actions}
+                            handleActionClick={handleSubmit}
+                            opacity={calculateOpacity(index)}
+                        />
                     ))}
+
                 </div>
 
 
