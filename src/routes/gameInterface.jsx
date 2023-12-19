@@ -6,22 +6,32 @@ import SidebarSection from '../components/sidebarSection';
 
 export default function GameInterface() {
 
+    // messages: An array that holds all chat messages.
     const [messages, setMessages] = useState([]);
+
+    // isSmallScreen: A boolean that indicates whether the screen size is small (less than 640px).
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 640);
+
+    // isDesktopSidebarOpen: A boolean that controls the visibility of the desktop sidebar.
     const [isDesktopSidebarOpen, setIsDesktopSidebarOpen] = useState(true);
+
+    // isMobileMenuOpen: A boolean that controls the visibility of the mobile menu.
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+    // summary: An array that holds the summary of the game.
     const [summary, setSummary] = useState([]);
+
+    // openSections: An object that tracks which sections are open (Character, Inventory, Map) in the sidebar/menu.
     const [openSections, setOpenSections] = useState({
         Character: false,
         Inventory: false,
         Map: false
     });
 
-    // Ref used to access the chat container element.
+    // Ref used to access the chat container element for displaying chat messages.
     const chatContainerRef = useRef(null);
-    // Ref used to access the textarea element.
+    // Ref used to access the textarea element for user input.
     const textareaRef = useRef(null);
-
 
     const adjustTextareaHeight = () => {
         const textarea = textareaRef.current;
@@ -36,35 +46,45 @@ export default function GameInterface() {
         textarea.style.height = `${newHeight}px`;
     };
 
+    /*
+    * Scrolls the chat container to the bottom.
+    * This function is called whenever the messages array is updated.
+    */
     const scrollToBottom = () => {
         const chatContainer = chatContainerRef.current;
         chatContainer.scrollTop = chatContainer.scrollHeight;
     };
 
+    /*
+    * Calculates the opacity of a chat message based on its index.
+    * The most recent message will have an opacity of 1, and the opacity will decrease by 0.05 for each older message.
+    * Since only the most recent 10 messages are displayed, the oldest message will have an opacity of 0.5.
+    */
     const calculateOpacity = index => {
         const totalMessages = messages.length;
         const age = totalMessages - index;
         return (100 - age * 5 + 5) / 100;
     };
 
+    // Scroll to the bottom of the chat container whenever the messages array is updated
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
 
+    // Listen for window resize events and update isSmallScreen accordingly
     useEffect(() => {
         const checkScreenSize = () => {
             setIsSmallScreen(window.innerWidth < 640);
         };
-
         window.addEventListener('resize', checkScreenSize);
-
-        // Clean up
         return () => {
-            window.removeEventListener('resize', checkScreenSize);
+            window.removeEventListener('resize', checkScreenSize);// Clean up
         };
     }, []);
 
-
+    // Placeholder function for handling settings button click
+    // TODO: Replace with actual function
+    // For now, this will reset the conversation history
     const handleSettingsClick = () => {
         // For now, this will reset the conversation history
         setMessages([]);
@@ -83,13 +103,25 @@ export default function GameInterface() {
             })
     };
 
+    /*
+    * Handles the Enter key press event for the textarea.
+    * If the Enter key is pressed without the Shift key, the submit function will be called.
+    * Otherwise, a new line will be created.
+    */
     const handleKeyPress = (event) => {
         if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault(); // Prevents the default action (new line)
-            handleSubmit(); // Calls your submit function
+            handleSubmit(); // Calls submit function
         }
     };
 
+    /* 
+    * Fetches the AI response and adds it to the messages array.
+    * This function is called whenever the user submits a message.
+    * If the user clicked an action button, the action text will be passed in as a parameter.
+    * Otherwise, the textarea value will be used.
+    * The textarea will be reset if the user used the textarea to submit a message.
+    */
     const handleSubmit = (actionText = null) => {
         const wasActionClicked = actionText !== null;
         // If the user clicked an action button, use the action text instead of the textarea value
@@ -129,6 +161,12 @@ export default function GameInterface() {
         }
     };
 
+    /*
+    * Handles the toggling of sidebar sections.
+    * This function is passed to the SidebarSection component as a prop.
+    * The sectionTitle parameter is the title of the section that was clicked.
+    * The openSections state is updated accordingly.
+    */
     const handleSectionToggle = (sectionTitle) => {
         setOpenSections(prev => ({
             ...prev,
@@ -136,8 +174,10 @@ export default function GameInterface() {
         }));
     };
 
+    // Toggles the visibility of the desktop sidebar
     const toggleSidebar = () => { setIsDesktopSidebarOpen(!isDesktopSidebarOpen); };
 
+    // Calculates the width of the sidebar based on the sidebar state and screen size
     const isAnySectionOpen = Object.values(openSections).some(value => value);
     const sidebarSectionOpenWidthToggler = isSmallScreen ? "100vw" : (isAnySectionOpen ? '420px' : '320px');
 
@@ -147,7 +187,7 @@ export default function GameInterface() {
             <Disclosure as="nav">
                 {({ open }) => (
                     <>
-                        {/* Mobile Sidebar Toggle */}
+                        {/* Mobile Sidebar Toggle Button */}
                         <div className={`${open ? "bottom-4" : "bottom-20"} sm:hidden fixed right-4 z-20`}>
                             <Disclosure.Button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                                 className="p-2 rounded-full text-light-primary-text dark:text-dark-primary-text hover:bg-light-secondary-text dark:hover:bg-dark-secondary-text transition-colors duration-200">
@@ -158,7 +198,6 @@ export default function GameInterface() {
 
 
                         {/* Combined Sidebar Content for Mobile and Desktop */}
-                        {/* Some ugly code I wrote in order to handle window resizing for the menu */}
                         <div
                             className={`${open ? 'block' : 'hidden'} h-full sm:block px-4 py-2 sm:max-w-[420px]
                                 ${isDesktopSidebarOpen ? `sm:w-[${sidebarSectionOpenWidthToggler}] sm:px-4` : 'sm:w-0 sm:px-0'} 
@@ -169,10 +208,9 @@ export default function GameInterface() {
                         >
                             {/* Section header - Memories */}
                             <h2 className="py-2 text-m font-medium text-light-primary-text dark:text-dark-primary-text">Memories</h2>
-
                             <hr className="my-4 border-light-secondary-text dark:border-dark-secondary-text" />
 
-                            {/* Summary */}
+                            {/* Summary Dropdown */}
                             <SidebarSection
                                 title="Summary"
                                 handleSectionToggle={handleSectionToggle}
@@ -181,11 +219,10 @@ export default function GameInterface() {
                                 isDesktopSidebarOpen={isDesktopSidebarOpen}
                                 isMobileMenuOpen={isMobileMenuOpen}
                             />
-
-                            {/* dividing line */}
                             <hr className="my-4 border-light-secondary-text dark:border-dark-secondary-text" />
 
                             {/* Settings */}
+                            {/* TODO: Replace with actual settings */}
                             <button
                                 onClick={handleSettingsClick}
                                 className="flex items-center w-full mb-3 text-left font-semibold text-light-primary-text dark:text-dark-primary-text hover:text-light-accent dark:hover:text-dark-accent transition-colors duration-200 whitespace-nowrap"
@@ -196,7 +233,6 @@ export default function GameInterface() {
                         </div>
                     </>
                 )}
-
             </Disclosure>
 
             {/* Sidebar Toggle Button for Desktop */}
@@ -227,7 +263,6 @@ export default function GameInterface() {
 
                 </div>
 
-
                 {/* Input Area */}
                 <div className="flex items-center justify-center p-4">
                     <div className="flex items-center max-w-3xl w-full">
@@ -247,8 +282,6 @@ export default function GameInterface() {
                     </div>
                 </div>
             </div>
-
-
         </div>
     );
 }
