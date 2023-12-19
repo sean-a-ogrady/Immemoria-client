@@ -2,27 +2,38 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon, ChevronDownIcon, Cog6ToothIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import ChatMessage from '../components/chatMessage';
+import SidebarSection from '../components/sidebarSection';
+import initializationOptions from '../assets/initialization_options.json';
+
 
 export default function GameInterface() {
 
+    // messages: An array that holds all chat messages.
     const [messages, setMessages] = useState([]);
+
+    // isSmallScreen: A boolean that indicates whether the screen size is small (less than 640px).
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth < 640);
+
+    // isDesktopSidebarOpen: A boolean that controls the visibility of the desktop sidebar.
     const [isDesktopSidebarOpen, setIsDesktopSidebarOpen] = useState(true);
+
+    // isMobileMenuOpen: A boolean that controls the visibility of the mobile menu.
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [summary, setSummary] = useState("");
+
+    // summary: An array that holds the summary of the game.
+    const [summary, setSummary] = useState([]);
+
+    // openSections: An object that tracks which sections are open (Character, Inventory, Map) in the sidebar/menu.
     const [openSections, setOpenSections] = useState({
         Character: false,
         Inventory: false,
         Map: false
     });
 
+    // Ref used to access the chat container element for displaying chat messages.
     const chatContainerRef = useRef(null);
+    // Ref used to access the textarea element for user input.
     const textareaRef = useRef(null);
-
-    const getAIResponse = (userMessage) => {
-        // Simulate AI response based on the user's message
-        return "This is a simulated response.";
-    };
 
     const adjustTextareaHeight = () => {
         const textarea = textareaRef.current;
@@ -37,33 +48,88 @@ export default function GameInterface() {
         textarea.style.height = `${newHeight}px`;
     };
 
+    /*
+    * Scrolls the chat container to the bottom.
+    * This function is called whenever the messages array is updated.
+    */
     const scrollToBottom = () => {
         const chatContainer = chatContainerRef.current;
         chatContainer.scrollTop = chatContainer.scrollHeight;
     };
 
+    /*
+    * Calculates the opacity of a chat message based on its index.
+    * The most recent message will have an opacity of 1, and the opacity will decrease by 0.05 for each older message.
+    * Since only the most recent 10 messages are displayed, the oldest message will have an opacity of 0.5.
+    */
+    const calculateOpacity = index => {
+        const totalMessages = messages.length;
+        const age = totalMessages - index;
+        return (100 - age * 5 + 5) / 100;
+    };
+
+    // Returns a random initialization option from the specified category
+    const getRandomOption = (category) => {
+        const options = initializationOptions.actions[category];
+        return options[Math.floor(Math.random() * options.length)].description;
+    };
+
+    // Initialize the game with a welcome message
+    const initializeGameMessage = () => {
+        setMessages([{
+            text: `Welcome to *Immemoria*, a text-based RPG where your memories shape reality. In this ever-changing world, each decision you make influences the course of your journey.
+                As you explore various locations across time, interact with NPCs, and face challenges, remember that your choices not only affect the present but also alter the past and future.
+                To begin your adventure in Immemoria, simply choose an action from the list below to kickstart the gameplay, or write your own. Your actions will determine the path you take and the form Immemoria holds.
+                \n\n**How to Play:**
+                \n- Immemoria responds to your inputs, creating a narrative based on your choices.
+                \n- The game tracks your interactions and decisions through the *conversation history* (what you're currently looking at) and *summary* (available in the menu).
+                \n- The conversation history shows recent exchanges, helping maintain the story's context. It's limited to the 10 most recent messages.
+                \n- The 'summary' provides an overview of key developments and decisions, capturing your journey's essence.
+                \n- Everything that is viewable on your screen is what Immemoria remembers. Beyond that, the world and history evolve and change, just as with memory.
+                \nRemember, in *Immemoria*, your memories are the key to shaping your destiny.`,
+            isOwnMessage: false,
+            actions: {
+                awaken_in_mystery: "I open my eyes.",
+                time_period: getRandomOption("time_period"),
+                start_in_a_location: getRandomOption("start_in_a_location"),
+                establish_a_genre: getRandomOption("establish_a_genre"),
+                player_motivation: getRandomOption("player_motivation"),
+                encounter_a_situation: getRandomOption("encounter_a_situation"),
+                explore_a_memory: getRandomOption("explore_a_memory")
+            }
+        }]);
+    }
+
+    // Initialize the game with a welcome message
+    useEffect(() => {
+        // TODO: Initialize from database
+        // If there is no conversation history, initialize the game with a welcome message
+        initializeGameMessage();
+    }, []);
+
+    // Scroll to the bottom of the chat container whenever the messages array is updated
     useEffect(() => {
         scrollToBottom();
     }, [messages]);
 
+    // Listen for window resize events and update isSmallScreen accordingly
     useEffect(() => {
         const checkScreenSize = () => {
             setIsSmallScreen(window.innerWidth < 640);
         };
-
         window.addEventListener('resize', checkScreenSize);
-
-        // Clean up
         return () => {
-            window.removeEventListener('resize', checkScreenSize);
+            window.removeEventListener('resize', checkScreenSize);// Clean up
         };
     }, []);
 
-
+    // Placeholder function for handling settings button click
+    // TODO: Replace with actual function
+    // For now, this will reset the conversation history
     const handleSettingsClick = () => {
         // For now, this will reset the conversation history
         setMessages([]);
-        setSummary("");
+        setSummary([]);
         fetch('http://localhost:5000/ai/reset', {
             method: 'POST',
             headers: {
@@ -71,25 +137,45 @@ export default function GameInterface() {
             },
             body: JSON.stringify({})
         })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            alert("Conversation reset.")
-        })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                alert("Conversation reset.")
+            })
+        initializeGameMessage();
     };
 
+    /*
+    * Handles the Enter key press event for the textarea.
+    * If the Enter key is pressed without the Shift key, the submit function will be called.
+    * Otherwise, a new line will be created.
+    */
     const handleKeyPress = (event) => {
         if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault(); // Prevents the default action (new line)
-            handleSubmit(); // Calls your submit function
+            handleSubmit(); // Calls submit function
         }
     };
 
-    const handleSubmit = () => {
-        const userMessage = textareaRef.current.value.trim();
+    /* 
+    * Fetches the AI response and adds it to the messages array.
+    * This function is called whenever the user submits a message.
+    * If the user clicked an action button, the action text will be passed in as a parameter.
+    * Otherwise, the textarea value will be used.
+    * The textarea will be reset if the user used the textarea to submit a message.
+    */
+    const handleSubmit = (actionText = null) => {
+        const wasActionClicked = actionText !== null;
+        // If the user clicked an action button, use the action text instead of the textarea value
+        const userMessage = wasActionClicked ? actionText : textareaRef.current.value.trim();
         if (userMessage) {
             // Add user message to messages array
-            setMessages(prevMessages => [...prevMessages, { text: userMessage, isOwnMessage: true }]);
+            setMessages(prevMessages => {
+                // Create a new array with the new message
+                const updatedMessages = [...prevMessages, { text: userMessage, isOwnMessage: true }];
+                // Keep only the last 10 messages
+                return updatedMessages.slice(-10);
+            });
 
             // Get example AI response
             fetch('http://localhost:5000/ai', {
@@ -102,20 +188,28 @@ export default function GameInterface() {
                     initialize: messages.length === 0
                 })
             })
-            .then(response => response.json())
-            .then(data => {
-                setMessages(prevMessages => [...prevMessages, { text: data.response, isOwnMessage: false }]);
-                setSummary(data.summary);
-            })
-            
-            // const aiResponse = getAIResponse(userMessage);
-            // setMessages(prevMessages => [...prevMessages, { text: aiResponse, isOwnMessage: false }]);
+                .then(response => response.json())
+                .then(data => {
+                    setMessages(prevMessages => {
+                        const updatedMessages = [...prevMessages, { text: data.description, isOwnMessage: false, actions: data.actions }]
+                        return updatedMessages.slice(-10);
+                    });
+                    setSummary(data.summary);
+                })
         }
-        // Reset textarea
-        textareaRef.current.value = '';
-        adjustTextareaHeight();
+        // Reset textarea if text field was used
+        if (!wasActionClicked) {
+            textareaRef.current.value = '';
+            adjustTextareaHeight();
+        }
     };
 
+    /*
+    * Handles the toggling of sidebar sections.
+    * This function is passed to the SidebarSection component as a prop.
+    * The sectionTitle parameter is the title of the section that was clicked.
+    * The openSections state is updated accordingly.
+    */
     const handleSectionToggle = (sectionTitle) => {
         setOpenSections(prev => ({
             ...prev,
@@ -123,8 +217,10 @@ export default function GameInterface() {
         }));
     };
 
+    // Toggles the visibility of the desktop sidebar
     const toggleSidebar = () => { setIsDesktopSidebarOpen(!isDesktopSidebarOpen); };
 
+    // Calculates the width of the sidebar based on the sidebar state and screen size
     const isAnySectionOpen = Object.values(openSections).some(value => value);
     const sidebarSectionOpenWidthToggler = isSmallScreen ? "100vw" : (isAnySectionOpen ? '420px' : '320px');
 
@@ -134,41 +230,42 @@ export default function GameInterface() {
             <Disclosure as="nav">
                 {({ open }) => (
                     <>
-                        {/* Mobile Sidebar Toggle */}
+                        {/* Mobile Sidebar Toggle Button */}
                         <div className={`${open ? "bottom-4" : "bottom-20"} sm:hidden fixed right-4 z-20`}>
                             <Disclosure.Button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                                 className="p-2 rounded-full text-light-primary-text dark:text-dark-primary-text hover:bg-light-secondary-text dark:hover:bg-dark-secondary-text transition-colors duration-200">
                                 <span className="sr-only">Toggle sidebar</span>
-                                {open ? <XMarkIcon className="h-6 w-6" /> : <Bars3Icon className="h-6 w-6" />}
+                                {open ? <ChevronDownIcon className="h-6 w-6" /> : <ChevronUpIcon className="h-6 w-6" />}
                             </Disclosure.Button>
                         </div>
 
 
                         {/* Combined Sidebar Content for Mobile and Desktop */}
-                        {/* Some ugly code I wrote in order to handle window resizing for the menu */}
                         <div
                             className={`${open ? 'block' : 'hidden'} h-full sm:block px-4 py-2 sm:max-w-[420px]
                                 ${isDesktopSidebarOpen ? `sm:w-[${sidebarSectionOpenWidthToggler}] sm:px-4` : 'sm:w-0 sm:px-0'} 
                                 w-[100vw] bg-light-sidebar dark:bg-dark-sidebar z-10 flex flex-col overflow-y-auto
                                 ${(isSmallScreen || !isDesktopSidebarOpen) ? "" : "border-r border-light-primary-text dark:border-dark-primary-text"}
                                 transition-all ease-in-out duration-300`}
-                            style={{width: isDesktopSidebarOpen ? sidebarSectionOpenWidthToggler : '0px'}}
+                            style={{ width: isDesktopSidebarOpen ? sidebarSectionOpenWidthToggler : '0px' }}
                         >
                             {/* Section header - Memories */}
                             <h2 className="py-2 text-m font-medium text-light-primary-text dark:text-dark-primary-text">Memories</h2>
-
                             <hr className="my-4 border-light-secondary-text dark:border-dark-secondary-text" />
 
-                            {/* Summary */}
-                            <SidebarSection title="Summary" handleSectionToggle={handleSectionToggle} content={summary} />
-
-                            {/* Locations */}
-                            <SidebarSection title="Locations" handleSectionToggle={handleSectionToggle} />
-
-                            {/* dividing line */}
+                            {/* Summary Dropdown */}
+                            <SidebarSection
+                                title="Summary"
+                                handleSectionToggle={handleSectionToggle}
+                                content={summary} openSections={openSections}
+                                isSmallScreen={isSmallScreen}
+                                isDesktopSidebarOpen={isDesktopSidebarOpen}
+                                isMobileMenuOpen={isMobileMenuOpen}
+                            />
                             <hr className="my-4 border-light-secondary-text dark:border-dark-secondary-text" />
 
                             {/* Settings */}
+                            {/* TODO: Replace with actual settings */}
                             <button
                                 onClick={handleSettingsClick}
                                 className="flex items-center w-full mb-3 text-left font-semibold text-light-primary-text dark:text-dark-primary-text hover:text-light-accent dark:hover:text-dark-accent transition-colors duration-200 whitespace-nowrap"
@@ -179,11 +276,10 @@ export default function GameInterface() {
                         </div>
                     </>
                 )}
-
             </Disclosure>
 
             {/* Sidebar Toggle Button for Desktop */}
-            <div className={`hidden sm:flex sm:absolute sm:left-[${sidebarSectionOpenWidthToggler}] sm:top-1/2 sm:-translate-y-1/2 sm:translate-x-1 z-20 transition-all ease-in-out duration-300`} style={{ left: isDesktopSidebarOpen ? sidebarSectionOpenWidthToggler : '0px'}}>
+            <div className={`hidden sm:flex sm:absolute sm:left-[${sidebarSectionOpenWidthToggler}] sm:top-1/2 sm:-translate-y-1/2 sm:translate-x-1 z-20 transition-all ease-in-out duration-300`} style={{ left: isDesktopSidebarOpen ? sidebarSectionOpenWidthToggler : '0px' }}>
                 <button
                     onClick={toggleSidebar}
                     className="text-light-primary-text dark:text-dark-primary-text hover:text-light-accent dark:hover:text-dark-accent transition-colors duration-200"
@@ -198,10 +294,17 @@ export default function GameInterface() {
                 <div ref={chatContainerRef} className="flex flex-col overflow-y-auto overflow-x-hidden py-3 px-7 max-w-3xl w-full mx-auto">
                     {/* Render chat messages */}
                     {messages.map((msg, index) => (
-                        <ChatMessage key={index} message={msg.text} isOwnMessage={msg.isOwnMessage} />
+                        <ChatMessage
+                            key={index}
+                            message={msg.text}
+                            isOwnMessage={msg.isOwnMessage}
+                            actions={msg.actions}
+                            handleActionClick={handleSubmit}
+                            opacity={calculateOpacity(index)}
+                        />
                     ))}
-                </div>
 
+                </div>
 
                 {/* Input Area */}
                 <div className="flex items-center justify-center p-4">
@@ -222,27 +325,6 @@ export default function GameInterface() {
                     </div>
                 </div>
             </div>
-
-
         </div>
     );
 }
-
-const SidebarSection = ({ title, content, handleSectionToggle }) => (
-    <Disclosure>
-        {({ open }) => (
-            <>
-                <Disclosure.Button onClick={() => handleSectionToggle(title)} className="flex justify-between w-full py-2 text-sm font-medium text-left text-light-primary-text dark:text-dark-primary-text hover:text-light-accent dark:hover:text-dark-accent transition-colors duration-200">
-                    {title}
-                    <span className="ml-2">
-                        {open ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronDownIcon className="h-5 w-5" />}
-                    </span>
-                </Disclosure.Button>
-                <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-light-secondary-text dark:text-dark-secondary-text">
-                    {/* Placeholder content for each section */}
-                    {content}
-                </Disclosure.Panel>
-            </>
-        )}
-    </Disclosure>
-);
