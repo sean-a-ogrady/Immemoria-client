@@ -1,0 +1,336 @@
+{
+    "actions": {
+        "time_period": [
+            {
+                "id": 1,
+                "description": "I find myself at the dawn of civilization, where ancient tribes and primal wilderness reign supreme."
+            },
+            {
+                "id": 2,
+                "description": "I am in the midst of the great Egyptian dynasties, surrounded by pyramids and the bustling life of the Nile."
+            },
+            {
+                "id": 3,
+                "description": "I am in the heart of Classical Greece, amidst philosophers and great warriors, where democracy and art flourish."
+            },
+            {
+                "id": 4,
+                "description": "I stand in the shadow of the Roman Empire, witnessing the blend of imperial power and cultural diversity."
+            },
+            {
+                "id": 5,
+                "description": "I am in the Medieval Ages, a time of knights, castles, and a world awakening to new ideas."
+            },
+            {
+                "id": 6,
+                "description": "I explore the Renaissance, an era of enlightenment and unprecedented artistic achievement."
+            },
+            {
+                "id": 7,
+                "description": "I am amidst the Industrial Revolution, where steam power and strange machinery redefine life and work."
+            },
+            {
+                "id": 8,
+                "description": "I find myself in the heart of the 20th century, a time of rapid change and global conflicts."
+            },
+            {
+                "id": 9,
+                "description": "I am in the modern world, a digital age where technology and culture create a fast-paced life."
+            },
+            {
+                "id": 10,
+                "description": "I step into a future of advanced technology, exploring a world of artificial intelligence and interstellar travel."
+            },
+            {
+                "id": 11,
+                "description": "I am in a post-apocalyptic future, where humanity strives to rebuild amidst the ruins of a fallen civilization."
+            }
+        ],
+        "start_in_a_location": [
+            {
+                "id": 1,
+                "description": "I wake up in a dense, ancient forest, the canopy above barely letting through shafts of light."
+            },
+            {
+                "id": 2,
+                "description": "I find myself on the bustling streets of a grand medieval city, with cobbled pathways and towering cathedrals."
+            },
+            {
+                "id": 3,
+                "description": "I stand at the edge of a tranquil village, nestled in a serene valley surrounded by mountains."
+            },
+            {
+                "id": 4,
+                "description": "I am on a busy space station orbiting a distant planet, filled with beings from across the galaxy."
+            },
+            {
+                "id": 5,
+                "description": "I open my eyes in the heart of a sunken underwater city, its forgotten structures looming in the murky depths."
+            },
+            {
+                "id": 6,
+                "description": "I am in a sprawling desert, ancient ruins scattered across the horizon under the blazing sun."
+            },
+            {
+                "id": 7,
+                "description": "I emerge in the midst of a futuristic metropolis, neon lights illuminating the towering skyscrapers."
+            },
+            {
+                "id": 8,
+                "description": "I stand in the courtyard of a majestic palace, ornate gardens and fountains stretching out before me."
+            },
+            {
+                "id": 9,
+                "description": "I find myself at the crossroads of a bustling market in an old-world trade city, teeming with merchants and travelers."
+            },
+            {
+                "id": 10,
+                "description": "I wake up in the remnants of a post-apocalyptic settlement, with nature reclaiming the crumbling infrastructure."
+            }
+        ],        
+        "establish_a_genre": [
+            {
+                "id": 1,
+                "description": "I enter a world of high fantasy, where magic weaves through the fabric of reality, and mythical creatures roam mystical lands."
+            },
+            {
+                "id": 2,
+                "description": "I step into a realm of science fiction, where advanced technology shapes societies, and the mysteries of space beckon."
+            },
+            {
+                "id": 3,
+                "description": "I find myself in a Gothic setting, where shadowy castles loom, and tales of horror and romance intertwine in the moonlit night."
+            },
+            {
+                "id": 4,
+                "description": "I'm drawn into a noir-inspired world, filled with intrigue, shadowy figures, and complex mysteries waiting in rain-soaked streets."
+            },
+            {
+                "id": 5,
+                "description": "I venture into a post-apocalyptic landscape, where survival is key, and the remnants of civilization hold untold stories."
+            },
+            {
+                "id": 6,
+                "description": "I'm in a world of steampunk, where Victorian aesthetics blend with futuristic inventions powered by steam and gears."
+            },
+            {
+                "id": 7,
+                "description": "I explore a cyberpunk universe, where neon lights illuminate mega-cities, and the digital and physical worlds collide."
+            },
+            {
+                "id": 8,
+                "description": "I immerse myself in a historical epic, reliving the events and cultures of a bygone era, where history shapes every aspect of life."
+            },
+            {
+                "id": 9,
+                "description": "I enter a realm of fairy tales, where enchanted forests, timeless fables, and magical beings create a tapestry of wonder and whimsy."
+            },
+            {
+                "id": 10,
+                "description": "I find myself in a world of urban fantasy, where the magical and mundane coexist, hidden in plain sight within our modern world."
+            }
+        ],        
+        "player_motivation": [
+            {
+                "id": 1,
+                "description": "I am driven by a deep curiosity to uncover the forgotten histories and hidden truths of this world."
+            },
+            {
+                "id": 2,
+                "description": "I seek to reclaim lost memories of my past, piecing together who I am and where I come from."
+            },
+            {
+                "id": 3,
+                "description": "I am motivated by a quest for justice, aiming to right a wrong that haunts my every step."
+            },
+            {
+                "id": 4,
+                "description": "I pursue the thrill of adventure, eager to explore unknown lands and face whatever challenges they hold."
+            },
+            {
+                "id": 5,
+                "description": "I am on a mission to find a lost loved one, whose memory guides me through the mysteries of Immemoria."
+            },
+            {
+                "id": 6,
+                "description": "I am compelled by a need to protect this world from an impending threat only I seem to sense."
+            },
+            {
+                "id": 7,
+                "description": "I yearn for knowledge and the wisdom hidden within the folds of time, seeking answers to existential questions."
+            },
+            {
+                "id": 8,
+                "description": "I am an agent of change, determined to alter the course of history for the betterment of all."
+            },
+            {
+                "id": 9,
+                "description": "I am driven by redemption, seeking to atone for a past mistake that left a mark on my soul."
+            },
+            {
+                "id": 10,
+                "description": "I seek to harness the mystical powers of this world, aiming to understand and wield them."
+            }
+        ],        
+        "encounter_a_situation": [
+            {
+                "id": 1,
+                "description": "I find myself amidst a bustling festival, colorful and vibrant, filled with mysterious performers and curious onlookers."
+            },
+            {
+                "id": 2,
+                "description": "I come across an ancient artifact unearthed, drawing me into a puzzle that hints at a forgotten era."
+            },
+            {
+                "id": 3,
+                "description": "I witness a strange phenomenon in the sky, a celestial event that seems to warp the very fabric of time and space."
+            },
+            {
+                "id": 4,
+                "description": "I stumble upon a heated debate in the town square, where two factions argue about the future of their community."
+            },
+            {
+                "id": 5,
+                "description": "I am caught in the middle of a mysterious theft, where an invaluable object has been stolen under mysterious circumstances."
+            },
+            {
+                "id": 6,
+                "description": "I encounter a creature of legend, thought to be a myth, offering me a quest that could change everything."
+            },
+            {
+                "id": 7,
+                "description": "I find an enigmatic map leading to an unknown destination, hinting at hidden treasures and unseen dangers."
+            },
+            {
+                "id": 8,
+                "description": "I am approached by a mysterious stranger who seems to know more about me than I do, presenting a riddle wrapped in an enigma."
+            },
+            {
+                "id": 9,
+                "description": "I discover a secret passage in an old building, leading to forgotten tunnels and unknown depths."
+            },
+            {
+                "id": 10,
+                "description": "I am a witness to a supernatural event that defies explanation, urging me to seek answers that lie beyond the ordinary."
+            },
+            {
+                "id": 11,
+                "description": "I'm suddenly in the midst of a daring chase across rooftops, pursued by unknown adversaries with unclear motives."
+            },
+            {
+                "id": 12,
+                "description": "I find myself in the heart of a battlefield, swords clashing and arrows flying, with the fate of kingdoms hanging in the balance."
+            },
+            {
+                "id": 13,
+                "description": "I'm trapped in a collapsing temple, racing against time to escape with an ancient relic of untold power."
+            },
+            {
+                "id": 14,
+                "description": "I emerge in the middle of a heist in a high-security vault, with alarms blaring and guards rushing in."
+            },
+            {
+                "id": 15,
+                "description": "I'm part of a rebel uprising, stealthily infiltrating a fortress to overthrow a tyrannical regime."
+            },
+            {
+                "id": 16,
+                "description": "I'm navigating a high-speed vehicle chase through a futuristic cityscape, dodging obstacles and enemy drones."
+            },
+            {
+                "id": 17,
+                "description": "I find myself in a gladiatorial arena, facing off against a fearsome beast as the crowd roars for victory."
+            },
+            {
+                "id": 18,
+                "description": "I'm in the midst of an intense space battle, maneuvering a starship through a barrage of laser fire."
+            },
+            {
+                "id": 19,
+                "description": "I wake up on a sinking ship during a raging storm, struggling to find a way to survive and reach land."
+            },
+            {
+                "id": 20,
+                "description": "I'm scaling a treacherous mountain during a blizzard, racing to reach the summit before my rivals."
+            },
+            {
+                "id": 21,
+                "description": "I'm in the middle of a high-stakes poker game, trying to outwit my opponents and win the pot."
+            }
+        ],        
+        "explore_a_memory": [
+            {
+                "id": 1,
+                "description": "I delve into a cherished memory of a long-lost love, reliving moments of joy, passion, and heartache."
+            },
+            {
+                "id": 2,
+                "description": "I revisit memories of my childhood, exploring the innocent joys and simple pleasures of my early years."
+            },
+            {
+                "id": 3,
+                "description": "I recall a thrilling adventure from my past, full of danger, discovery, and the exhilaration of the unknown."
+            },
+            {
+                "id": 4,
+                "description": "I immerse myself in the memory of a profound friendship, experiencing once again the bonds that shaped me."
+            },
+            {
+                "id": 5,
+                "description": "I explore a bittersweet memory of farewell, a goodbye that left a mark on my soul and changed my path."
+            },
+            {
+                "id": 6,
+                "description": "I revisit a defining moment of triumph, a time when I overcame great odds and achieved something extraordinary."
+            },
+            {
+                "id": 7,
+                "description": "I reflect on a pivotal decision from my past, wondering how different choices might have led to different paths."
+            },
+            {
+                "id": 8,
+                "description": "I re-experience a moment of profound insight or revelation, a turning point that opened my eyes to new truths."
+            },
+            {
+                "id": 9,
+                "description": "I return to a memory of a place that felt like home, a sanctuary that offered comfort and peace in a turbulent world."
+            },
+            {
+                "id": 10,
+                "description": "I recall an encounter with a mysterious stranger, a fleeting connection that left a lasting impact on my journey."
+            },
+            {
+                "id": 11,
+                "description": "I explore a memory tinged with regret, a choice or action in my past that I wish I could undo or alter."
+            },
+            {
+                "id": 12,
+                "description": "I relive a moment of pure joy and celebration, a time of happiness and togetherness that uplifts my spirit."
+            },
+            {
+                "id": 13,
+                "description": "I delve into a memory of an unresolved mystery from my past, a puzzle that still haunts my thoughts."
+            },
+            {
+                "id": 14,
+                "description": "I revisit a memory of a lost opportunity, a path not taken or a chance not seized, wondering what might have been."
+            },
+            {
+                "id": 15,
+                "description": "I recall a memory of mending a broken relationship, a moment of forgiveness and understanding."
+            },
+            {
+                "id": 16,
+                "description": "I remember a pivotal moment of self-discovery, where I learned something crucial and defining about myself."
+            },
+            {
+                "id": 17,
+                "description": "I wander back to a memory of solitude, a time of quiet reflection and personal space that brought clarity."
+            },
+            {
+                "id": 18,
+                "description": "I relive a memory of shared traditions, cultural or familial rituals that connect me to my roots and heritage."
+            }
+        ]        
+    }
+}

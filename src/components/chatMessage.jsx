@@ -105,7 +105,7 @@ const ChatMessage = ({ message, isOwnMessage, actions, handleActionClick, opacit
                                 className="mb-2 px-4 py-2 text-light-primary-text dark:text-dark-primary-text border border-light-primary-text dark:border-dark-primary-text hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md transition-colors duration-200 text-left"
                                 onClick={() => onActionClick(actionText)}
                             >
-                                <strong>{actionType.charAt(0).toUpperCase() + actionType.slice(1)}:</strong> {actionText}
+                                <strong>{actionType.charAt(0).toUpperCase() + actionType.slice(1).replace(/_/g, " ")}:</strong> {actionText}
                             </button>
                         ))}
                     </div>

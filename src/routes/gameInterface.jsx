@@ -3,6 +3,8 @@ import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon, ChevronDownIcon, Cog6ToothIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import ChatMessage from '../components/chatMessage';
 import SidebarSection from '../components/sidebarSection';
+import initializationOptions from '../assets/initialization_options.json';
+
 
 export default function GameInterface() {
 
@@ -66,6 +68,45 @@ export default function GameInterface() {
         return (100 - age * 5 + 5) / 100;
     };
 
+    // Returns a random initialization option from the specified category
+    const getRandomOption = (category) => {
+        const options = initializationOptions.actions[category];
+        return options[Math.floor(Math.random() * options.length)].description;
+    };
+
+    // Initialize the game with a welcome message
+    const initializeGameMessage = () => {
+        setMessages([{
+            text: `Welcome to *Immemoria*, a text-based RPG where your memories shape reality. In this ever-changing world, each decision you make influences the course of your journey.
+                As you explore various locations across time, interact with NPCs, and face challenges, remember that your choices not only affect the present but also alter the past and future.
+                To begin your adventure in Immemoria, simply choose an action from the list below to kickstart the gameplay, or write your own. Your actions will determine the path you take and the form Immemoria holds.
+                \n\n**How to Play:**
+                \n- Immemoria responds to your inputs, creating a narrative based on your choices.
+                \n- The game tracks your interactions and decisions through the *conversation history* (what you're currently looking at) and *summary* (available in the menu).
+                \n- The conversation history shows recent exchanges, helping maintain the story's context. It's limited to the 10 most recent messages.
+                \n- The 'summary' provides an overview of key developments and decisions, capturing your journey's essence.
+                \n- Everything that is viewable on your screen is what Immemoria remembers. Beyond that, the world and history evolve and change, just as with memory.
+                \nRemember, in *Immemoria*, your memories are the key to shaping your destiny.`,
+            isOwnMessage: false,
+            actions: {
+                awaken_in_mystery: "I open my eyes.",
+                time_period: getRandomOption("time_period"),
+                start_in_a_location: getRandomOption("start_in_a_location"),
+                establish_a_genre: getRandomOption("establish_a_genre"),
+                player_motivation: getRandomOption("player_motivation"),
+                encounter_a_situation: getRandomOption("encounter_a_situation"),
+                explore_a_memory: getRandomOption("explore_a_memory")
+            }
+        }]);
+    }
+
+    // Initialize the game with a welcome message
+    useEffect(() => {
+        // TODO: Initialize from database
+        // If there is no conversation history, initialize the game with a welcome message
+        initializeGameMessage();
+    }, []);
+
     // Scroll to the bottom of the chat container whenever the messages array is updated
     useEffect(() => {
         scrollToBottom();
@@ -101,6 +142,7 @@ export default function GameInterface() {
                 console.log(data);
                 alert("Conversation reset.")
             })
+        initializeGameMessage();
     };
 
     /*
