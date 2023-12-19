@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon, ChevronDownIcon, Cog6ToothIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import ChatMessage from '../components/chatMessage';
+import SidebarSection from '../components/sidebarSection';
 
 export default function GameInterface() {
 
@@ -43,7 +44,7 @@ export default function GameInterface() {
     const calculateOpacity = index => {
         const totalMessages = messages.length;
         const age = totalMessages - index;
-        return (100 - age * 5 + 5)/100;
+        return (100 - age * 5 + 5) / 100;
     };
 
     useEffect(() => {
@@ -151,7 +152,7 @@ export default function GameInterface() {
                             <Disclosure.Button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                                 className="p-2 rounded-full text-light-primary-text dark:text-dark-primary-text hover:bg-light-secondary-text dark:hover:bg-dark-secondary-text transition-colors duration-200">
                                 <span className="sr-only">Toggle sidebar</span>
-                                {open ? <XMarkIcon className="h-6 w-6" /> : <ChevronUpIcon className="h-6 w-6" />}
+                                {open ? <ChevronDownIcon className="h-6 w-6" /> : <ChevronUpIcon className="h-6 w-6" />}
                             </Disclosure.Button>
                         </div>
 
@@ -172,7 +173,14 @@ export default function GameInterface() {
                             <hr className="my-4 border-light-secondary-text dark:border-dark-secondary-text" />
 
                             {/* Summary */}
-                            <SidebarSection title="Summary" handleSectionToggle={handleSectionToggle} content={summary} />
+                            <SidebarSection
+                                title="Summary"
+                                handleSectionToggle={handleSectionToggle}
+                                content={summary} openSections={openSections}
+                                isSmallScreen={isSmallScreen}
+                                isDesktopSidebarOpen={isDesktopSidebarOpen}
+                                isMobileMenuOpen={isMobileMenuOpen}
+                            />
 
                             {/* dividing line */}
                             <hr className="my-4 border-light-secondary-text dark:border-dark-secondary-text" />
@@ -244,22 +252,3 @@ export default function GameInterface() {
         </div>
     );
 }
-
-const SidebarSection = ({ title, content, handleSectionToggle }) => (
-    <Disclosure>
-        {({ open }) => (
-            <>
-                <Disclosure.Button onClick={() => handleSectionToggle(title)} className="flex justify-between w-full py-2 text-sm font-medium text-left text-light-primary-text dark:text-dark-primary-text hover:text-light-accent dark:hover:text-dark-accent transition-colors duration-200">
-                    {title}
-                    <span className="ml-2">
-                        {open ? <ChevronUpIcon className="h-5 w-5" /> : <ChevronDownIcon className="h-5 w-5" />}
-                    </span>
-                </Disclosure.Button>
-                <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-light-secondary-text dark:text-dark-secondary-text">
-                    {/* Placeholder content for each section */}
-                    {content}
-                </Disclosure.Panel>
-            </>
-        )}
-    </Disclosure>
-);
