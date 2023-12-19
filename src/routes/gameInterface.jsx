@@ -85,8 +85,9 @@ export default function GameInterface() {
                 \n- The game tracks your interactions and decisions through the *conversation history* (what you're currently looking at) and *summary* (available in the menu).
                 \n- The conversation history shows recent exchanges, helping maintain the story's context. It's limited to the 10 most recent messages.
                 \n- The 'summary' provides an overview of key developments and decisions, capturing your journey's essence.
+                \n- When typing, use quotation marks to indicate dialogue. i.e. *I say "Hello!".*
                 \n- Everything that is viewable on your screen is what Immemoria remembers. Beyond that, the world and history evolve and change, just as with memory.
-                \nRemember, in *Immemoria*, your memories are the key to shaping your destiny.`,
+                \nRemember, in *Immemoria*, your memories are the key to shaping your destiny. Click a path, or write your own.`,
             isOwnMessage: false,
             actions: {
                 awaken_in_mystery: "I open my eyes.",
@@ -141,8 +142,8 @@ export default function GameInterface() {
             .then(data => {
                 console.log(data);
                 alert("Conversation reset.")
+                initializeGameMessage();
             })
-        initializeGameMessage();
     };
 
     /*
@@ -298,6 +299,7 @@ export default function GameInterface() {
                             key={index}
                             message={msg.text}
                             isOwnMessage={msg.isOwnMessage}
+                            isLatestMessage={index === messages.length - 1}
                             actions={msg.actions}
                             handleActionClick={handleSubmit}
                             opacity={calculateOpacity(index)}
@@ -313,7 +315,7 @@ export default function GameInterface() {
                             ref={textareaRef}
                             onChange={adjustTextareaHeight}
                             onKeyDown={handleKeyPress}
-                            placeholder="Type your action (experimental)"
+                            placeholder="Choose your own fate..."
                             className="flex-grow resize-none p-2 rounded-md border border-light-secondary-text dark:border-dark-secondary-text bg-light-background dark:bg-dark-background text-light-primary-text dark:text-dark-primary-text overflow-auto h-10 max-h-32"
                         />
                         <button

@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 
-const ChatMessage = ({ message, isOwnMessage, actions, handleActionClick, opacity }) => {
+const ChatMessage = ({ message, isOwnMessage, isLatestMessage, actions, handleActionClick, opacity }) => {
 
-    const [showActions, setShowActions] = useState(true);
+    const [showActions, setShowActions] = useState(isLatestMessage);
+    
+    // If the message is not the latest message, don't show the actions
+    useEffect(() => {
+        if (!isLatestMessage) {
+            setShowActions(false);
+        }
+    }, [isLatestMessage]);
 
     const onActionClick = (actionText) => {
-        setShowActions(false); // Collapse the buttons
         handleActionClick(actionText); // Call the passed in event
     };
 
