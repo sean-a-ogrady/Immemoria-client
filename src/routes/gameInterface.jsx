@@ -79,14 +79,15 @@ export default function GameInterface() {
         setMessages([{
             text: `Welcome to *Immemoria*, a text-based RPG where your memories shape reality. In this ever-changing world, each decision you make influences the course of your journey.
                 As you explore various locations and encounter different scenarios, remember that your choices not only affect the present but also alter the past and future.
-                To begin your adventure in Immemoria, simply choose an action from the list below to kickstart the gameplay, or write your own. Your actions will determine the path you take and the form Immemoria holds.
+                To begin your adventure in Immemoria, simply choose an action from the list below to kickstart the gameplay, or write your own.
                 \n\n**How to Play:**
                 \n- You can choose from a list of actions or write your own.
+                \n- *Immemoria* is most engaging when you write and choose actions in your playthrough.
                 \n- The game tracks your interactions and decisions through the *conversation history* (what you're currently looking at) and *summary* (available in the menu).
                 \n- The conversation history shows recent exchanges, helping maintain the story's context. It's limited to the 10 most recent messages.
                 \n- The 'summary' provides an overview of key developments and decisions, capturing your journey's essence.
                 \n- When typing, use quotation marks to indicate dialogue. i.e. *I say "Hello!".*
-                \n- Everything that is viewable on your screen is what Immemoria remembers. Beyond that, the world and history evolve and change, just as with memory.
+                \n- Everything that is viewable on your screen is what *Immemoria* remembers. Beyond that, the world and history morph and change, just as with memory.
                 \nRemember, in *Immemoria*, your memories are the key to shaping your destiny. Click a path, or write your own.`,
             isOwnMessage: false,
             actions: {
@@ -94,9 +95,10 @@ export default function GameInterface() {
                 time_period: getRandomOption("time_period"),
                 start_in_a_location: getRandomOption("start_in_a_location"),
                 establish_a_genre: getRandomOption("establish_a_genre"),
-                player_motivation: getRandomOption("player_motivation"),
+                //player_motivation: getRandomOption("player_motivation"),
                 encounter_a_situation: getRandomOption("encounter_a_situation"),
-                explore_a_memory: getRandomOption("explore_a_memory")
+                //explore_a_memory: getRandomOption("explore_a_memory")
+                combat_scenario: getRandomOption("combat_scenario"),
             }
         }]);
     }
