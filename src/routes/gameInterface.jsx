@@ -78,10 +78,10 @@ export default function GameInterface() {
     const initializeGameMessage = () => {
         setMessages([{
             text: `Welcome to *Immemoria*, a text-based RPG where your memories shape reality. In this ever-changing world, each decision you make influences the course of your journey.
-                As you explore various locations across time, interact with NPCs, and face challenges, remember that your choices not only affect the present but also alter the past and future.
+                As you explore various locations and encounter different scenarios, remember that your choices not only affect the present but also alter the past and future.
                 To begin your adventure in Immemoria, simply choose an action from the list below to kickstart the gameplay, or write your own. Your actions will determine the path you take and the form Immemoria holds.
                 \n\n**How to Play:**
-                \n- Immemoria responds to your inputs, creating a narrative based on your choices.
+                \n- You can choose from a list of actions or write your own.
                 \n- The game tracks your interactions and decisions through the *conversation history* (what you're currently looking at) and *summary* (available in the menu).
                 \n- The conversation history shows recent exchanges, helping maintain the story's context. It's limited to the 10 most recent messages.
                 \n- The 'summary' provides an overview of key developments and decisions, capturing your journey's essence.
@@ -248,7 +248,7 @@ export default function GameInterface() {
                                 w-[100vw] bg-light-sidebar dark:bg-dark-sidebar z-10 flex flex-col overflow-y-auto
                                 ${(isSmallScreen || !isDesktopSidebarOpen) ? "" : "border-r border-light-primary-text dark:border-dark-primary-text"}
                                 transition-all ease-in-out duration-300`}
-                            style={{ width: isDesktopSidebarOpen ? sidebarSectionOpenWidthToggler : '0px' }}
+                            style={{ width: isDesktopSidebarOpen ? (isSmallScreen ? "100vw" : sidebarSectionOpenWidthToggler) : '0px' }}
                         >
                             {/* Section header - Memories */}
                             <h2 className="py-2 text-m font-medium text-light-primary-text dark:text-dark-primary-text">Memories</h2>
@@ -315,7 +315,7 @@ export default function GameInterface() {
                             ref={textareaRef}
                             onChange={adjustTextareaHeight}
                             onKeyDown={handleKeyPress}
-                            placeholder="Choose your own fate..."
+                            placeholder="Type here to write your own fate..."
                             className="flex-grow resize-none p-2 rounded-md border border-light-secondary-text dark:border-dark-secondary-text bg-light-background dark:bg-dark-background text-light-primary-text dark:text-dark-primary-text overflow-auto h-10 max-h-32"
                         />
                         <button
