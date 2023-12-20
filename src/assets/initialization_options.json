@@ -87,7 +87,7 @@
                 "id": 10,
                 "description": "I wake up in the remnants of a post-apocalyptic settlement, with nature reclaiming the crumbling infrastructure."
             }
-        ],        
+        ],
         "establish_a_genre": [
             {
                 "id": 1,
@@ -128,8 +128,12 @@
             {
                 "id": 10,
                 "description": "I find myself in a world of urban fantasy, where the magical and mundane coexist, hidden in plain sight within our modern world."
+            },
+            {
+                "id": 11,
+                "description": "In a fog-enshrouded, eerie seaside town, I confront an eldrich, Lovecraftian entity, its mere presence threatening to unravel the fabric of my sanity."
             }
-        ],        
+        ],
         "player_motivation": [
             {
                 "id": 1,
@@ -171,7 +175,7 @@
                 "id": 10,
                 "description": "I seek to harness the mystical powers of this world, aiming to understand and wield them."
             }
-        ],        
+        ],
         "encounter_a_situation": [
             {
                 "id": 1,
@@ -257,7 +261,7 @@
                 "id": 21,
                 "description": "I'm in the middle of a high-stakes poker game, trying to outwit my opponents and win the pot."
             }
-        ],        
+        ],
         "explore_a_memory": [
             {
                 "id": 1,
@@ -331,6 +335,88 @@
                 "id": 18,
                 "description": "I relive a memory of shared traditions, cultural or familial rituals that connect me to my roots and heritage."
             }
-        ]        
+        ],
+        "combat_scenario": [
+            {
+                "id": 1,
+                "description": "I am engaged in a fierce sword duel in a medieval castle, where every move could be my last in this dance of steel and strategy."
+            },
+            {
+                "id": 2,
+                "description": "I find myself in a futuristic battleground, lasers and plasma bolts crisscrossing the air, as I maneuver for tactical advantage."
+            },
+            {
+                "id": 3,
+                "description": "I am part of a desperate defense against a horde of invading orcs, holding the line as the clash of arms and roar of battle fills the air."
+            },
+            {
+                "id": 4,
+                "description": "I navigate a stealth mission in an enemy base, avoiding detection while silently taking down guards to reach my objective."
+            },
+            {
+                "id": 5,
+                "description": "I am in the midst of a gladiatorial arena, facing off against a variety of fearsome beasts and skilled warriors, cheered on by a roaring crowd."
+            },
+            {
+                "id": 6,
+                "description": "I engage in a high-speed chase on hoverbikes through a neon-lit cityscape, dodging traffic and exchanging fire with pursuers."
+            },
+            {
+                "id": 7,
+                "description": "I lead a squad in a tactical assault on a fortified position, coordinating attacks and using the environment to gain an advantage."
+            },
+            {
+                "id": 8,
+                "description": "I am caught in a tense standoff in a dystopian city, where quick thinking and faster reactions are key to survival."
+            },
+            {
+                "id": 9,
+                "description": "I defend a village from a bandit raid, using guerilla tactics and the help of the villagers to overcome the odds."
+            },
+            {
+                "id": 10,
+                "description": "I am part of an epic space battle, piloting a fighter craft against a fleet of enemy ships in a dance of death among the stars."
+            },
+            {
+                "id": 11,
+                "description": "I stand on a craggy peak, facing a fearsome dragon whose scales glint in the moonlight. Armed with only a sword and my wits, I prepare to battle this ancient beast as it breathes fire into the starlit night."
+            },
+            {
+                "id": 12,
+                "description": "I'm in a cyberpunk city, where a rogue AI has unleashed mechanical creatures. I fight back using advanced tech and hacking skills, blending street combat with digital warfare."
+            },
+            {
+                "id": 13,
+                "description": "I am in the midst of a magical forest, engaged in a duel with a powerful sorcerer. Arcane spells clash with nature's fury, blending the mystic and the primal in a battle of wits and magic."
+            },
+            {
+                "id": 14,
+                "description": "I find myself on a pirate ship in stormy seas, locked in combat with undead sailors risen from the deep, where swordplay meets supernatural horror."
+            },
+            {
+                "id": 15,
+                "description": "I am in a steampunk Victorian London, fending off clockwork automatons with a combination of steam-powered gadgets and martial prowess."
+            },
+            {
+                "id": 16,
+                "description": "I'm in a dystopian wasteland, facing a band of mutated creatures in a struggle for survival, using improvised weapons and tactics in a harsh, unforgiving environment."
+            },
+            {
+                "id": 17,
+                "description": "I engage in a high-stakes aerial dogfight above a war-torn city of the future, piloting a jet against enemy drones, where technology and skill determine the victor."
+            },
+            {
+                "id": 18,
+                "description": "I'm in an ancient Roman coliseum, as a time traveler facing gladiators with futuristic gear, blending historical combat with advanced technology."
+            },
+            {
+                "id": 19,
+                "description": "I find myself in a surreal dreamscape, battling nightmarish creatures with the power of lucid dreaming, where reality bends and the impossible becomes possible."
+            },
+            {
+                "id": 20,
+                "description": "I am in an enchanted realm, caught in a conflict between rival fairy courts, where the clash of magic and cunning shapes the fate of the natural and supernatural worlds."
+            }
+        ]
     }
 }
