@@ -69,7 +69,7 @@ function LandingPage() {
                 alt="Immemoria background" 
                 className={`-z-10 absolute top-0 left-0 w-full h-full object-cover transition-opacity duration-2000 ${fadeIn ? 'opacity-100' : 'opacity-0'}`}
             />
-            <div className="relative z-10 flex flex-col items-center justify-center space-y-6 bg-white dark:bg-black dark:bg-opacity-50 bg-opacity-50 p-6 rounded-md">
+            <div className="relative z-10 flex flex-col items-center justify-center space-y-6 bg-white dark:bg-black dark:bg-opacity-50 bg-opacity-50 p-6 rounded-md border border-light-primary-text dark:border-dark-primary-text">
                 <h1 className="text-4xl font-bold text-light-primary-text dark:text-dark-primary-text">
                     Welcome to Immemoria
                 </h1>
