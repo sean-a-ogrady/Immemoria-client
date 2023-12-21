@@ -110,10 +110,10 @@ function Signup() {
                 />
                 {fieldFocus.username && (
                     <>
-                        <p className={`text-${usernameValid.format ? 'green' : 'red'}-500`}>
+                        <p className={`${usernameValid.format ? "text-green-500" : "text-red-500"}`}>
                             Format: Only letters and numbers.
                         </p>
-                        <p className={`text-${usernameValid.length ? 'green' : 'red'}-500`}>
+                        <p className={`${usernameValid.length ? "text-green-500" : "text-red-500"}`}>
                             Length: Minimum 1 character, max 32 characters.
                         </p>
                     </>
@@ -131,10 +131,10 @@ function Signup() {
                 />
                 {fieldFocus.email && (
                     <>
-                        <p className={`text-${emailValid.format ? 'green' : 'red'}-500`}>
+                        <p className={`${emailValid.format ? "text-green-500" : "text-red-500"}`}>
                             Format: Valid email format.
                         </p>
-                        <p className={`text-${emailValid.length ? 'green' : 'red'}-500`}>
+                        <p className={`${emailValid.length ? "text-green-500" : "text-red-500"}`}>
                             Length: Max 255 characters.
                         </p>
                     </>
@@ -152,16 +152,16 @@ function Signup() {
                 />
                 {fieldFocus.password && (
                     <>
-                        <p className={`text-${passwordValid.length ? 'green' : 'red'}-500`}>
+                        <p className={`${passwordValid.length ? "text-green-500" : "text-red-500"}`}>
                             Length: 8-255 characters.
                         </p>
-                        <p className={`text-${passwordValid.uppercase ? 'green' : 'red'}-500`}>
+                        <p className={`${passwordValid.uppercase ? "text-green-500" : "text-red-500"}`}>
                             Contains: At least one uppercase letter.
                         </p>
-                        <p className={`text-${passwordValid.lowercase ? 'green' : 'red'}-500`}>
+                        <p className={`${passwordValid.lowercase ? "text-green-500" : "text-red-500"}`}>
                             Contains: At least one lowercase letter.
                         </p>
-                        <p className={`text-${passwordValid.number ? 'green' : 'red'}-500`}>
+                        <p className={`${passwordValid.number ? "text-green-500" : "text-red-500"}`}>
                             Contains: At least one number.
                         </p>
                     </>
@@ -178,7 +178,7 @@ function Signup() {
                     className="w-full max-w-xs px-4 py-2 border border-light-primary-text dark:bg-dark-background dark:text-dark-primary-text dark:border-dark-primary-text rounded-md focus:outline-none focus:ring-2 focus:ring-dark-accent"
                 />
                 {fieldFocus.confirmPassword && (
-                    <p className={`text-${confirmPasswordMatch ? 'green' : 'red'}-500`}>
+                    <p className={`${confirmPasswordMatch ? "text-green-500" : "text-red-500"}`}>
                         Match: Confirm password must match the password.
                     </p>
                 )}
