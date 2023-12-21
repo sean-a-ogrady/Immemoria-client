@@ -9,18 +9,6 @@ import { url } from '../main';
 
 export default function GameInterface() {
 
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        fetch('http://localhost:5001/api/current_user')
-        .then(response => response.json)
-        .then(data => {
-            if (!data.user) {
-                navigate('/login');
-            }
-        })
-    }, [])
-
     // messages: An array that holds all chat messages.
     const [messages, setMessages] = useState([]);
 

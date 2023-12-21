@@ -6,7 +6,6 @@ import darkModeLogo from '../assets/Immemoria-logo-dark-theme.png';
 import lightModeLogo from '../assets/Immemoria-logo-light-theme.png';
 import SunIcon from '../assets/sunIcon.jsx';
 import MoonIcon from '../assets/moonIcon.jsx';
-import { url } from '../main';
 
 const DesktopNavbarButton = ({ children, onClick }) => {
     return (
@@ -37,18 +36,6 @@ function SiteNavbar({ toggleDarkMode, darkMode }) {
         navigate(path);
     };
 
-    const handleRouteToLogin = (path) => {
-        fetch('http://localhost:5001/api/current_user')
-            .then(response => response.json())
-            .then(data => {
-                if (!data.user){
-                    navigate("/login");
-                } else {
-                    navigate(path);
-                }
-            });
-    }
-
     return (
         <Disclosure as="nav" className="bg-light-navbar dark:bg-dark-navbar h-18">
             {({ open }) => (
@@ -73,7 +60,7 @@ function SiteNavbar({ toggleDarkMode, darkMode }) {
                             {/* Desktop Navigation Buttons */}
                             <DesktopNavbarButton onClick={() => handleNavigation('/signup')}>Sign Up</DesktopNavbarButton>
                             <DesktopNavbarButton onClick={() => handleNavigation('/login')}>Login</DesktopNavbarButton>
-                            <DesktopNavbarButton onClick={() => handleRouteToLogin('/play')}>Play</DesktopNavbarButton>
+                            <DesktopNavbarButton onClick={() => handleNavigation('/play')}>Play</DesktopNavbarButton>
                         </div>
                     </div>
 
@@ -87,7 +74,7 @@ function SiteNavbar({ toggleDarkMode, darkMode }) {
                             {/* Mobile Navigation Buttons */}
                             <MobileNavbarButton onClick={() => handleNavigation('/signup')}>Sign Up</MobileNavbarButton>
                             <MobileNavbarButton onClick={() => handleNavigation('/login')}>Login</MobileNavbarButton>
-                            <MobileNavbarButton onClick={() => handleRouteToLogin('/play')}>Play</MobileNavbarButton>
+                            <MobileNavbarButton onClick={() => handleNavigation('/play')}>Play</MobileNavbarButton>
                         </div>
                     </Disclosure.Panel>
                 </>
