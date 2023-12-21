@@ -6,7 +6,13 @@ function LandingPage() {
     const navigate = useNavigate();
 
     const startGame = () => {
-        fetch('http://localhost:5001/api/current_user')
+        fetch('http://localhost:5001/api/current_user', {
+            method: 'GET',
+            credentials: "include",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
             .then(response => response.json())
             .then(data => {
                 if (!data.user){

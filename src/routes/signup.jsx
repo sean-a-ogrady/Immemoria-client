@@ -63,12 +63,16 @@ function SignUpPage() {
             return;
         }
 
-        fetch('http://localhost:5001/api/signup', {
+        fetch('http://localhost:5001/signup', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ email, password, username }),
+            body: JSON.stringify({ 
+                email_address: email,
+                username: username,
+                password: password
+             }),
         })
             .then(response => {
                 if (!response.ok) {
@@ -77,11 +81,10 @@ function SignUpPage() {
                 return response.json();
             })
             .then(data => {
-                // Handle successful signup
+                alert('Signup successful')
                 navigate('/login');
             })
             .catch(error => {
-                // Handle errors and inform the user
                 setError(error.message);
             });
     };
