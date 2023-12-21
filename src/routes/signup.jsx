@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-function SignUpPage() {
+function Signup() {
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
@@ -195,10 +195,15 @@ function SignUpPage() {
                 >
                     Sign Up
                 </button>
+                {/* Route to Login Page */}
+                <p className="text-light-secondary-text dark:text-dark-secondary-text cursor-pointer hover:text-light-accent dark:hover:text-dark-accent transition-colors duration-200"
+                   onClick={() => navigate("/login")}>
+                    Already have an account? Log In
+                </p>
             </div>
         </div>
     );
     
 }
 
-export default SignUpPage;
+export default Signup;
