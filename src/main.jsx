@@ -6,6 +6,7 @@ import Root from './routes/root.jsx'
 import LandingPage from './routes/landingPage.jsx'
 import GameInterface from './routes/gameInterface.jsx'
 import NotFound from './routes/notFound.jsx'
+import Signup from './routes/signup.jsx'
 
 export const url = "http://localhost:5000"
 
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: '/play',
         element: <GameInterface />
+      },
+      {
+        path: '/signup',
+        element: <Signup />
       },
       {
           path: '*', // Catch-all route
