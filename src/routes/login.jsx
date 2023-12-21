@@ -28,7 +28,7 @@ function Login() {
         })
         .then(data => {
             // Handle successful login
-            navigate('/dashboard'); // Redirect to dashboard or appropriate page
+            navigate('/'); // Redirect to dashboard or appropriate page
         })
         .catch(error => {
             setError(error.message);

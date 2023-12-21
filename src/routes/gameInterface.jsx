@@ -11,21 +11,23 @@ export default function GameInterface() {
 
     const navigate = useNavigate()
 
-    useEffect(() => {
-        fetch('http://localhost:5001/api/current_user', {
-            method: 'GET',
-            credentials: "include",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(response => response.json)
-        .then(data => {
-            if (!data.user) {
-                navigate('/login');
-            }
-        })
-    }, [])
+    // TODO: Uncomment this code when the backend is ready
+    // useEffect(() => {
+    //     fetch('http://localhost:5001/api/current_user', {
+    //         method: 'GET',
+    //         credentials: "include",
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //     })
+    //     .then(response => response.json)
+    //     .then(response => response.json())
+    //         .then(data => {
+    //             if (data.status !== 200){
+    //                 navigate("/login");
+    //             }
+    //         });
+    // }, [])
 
     // messages: An array that holds all chat messages.
     const [messages, setMessages] = useState([]);

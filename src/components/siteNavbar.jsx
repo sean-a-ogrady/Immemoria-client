@@ -38,21 +38,24 @@ function SiteNavbar({ toggleDarkMode, darkMode }) {
     };
 
     const handleRouteToLogin = (path) => {
-        fetch('http://localhost:5001/api/current_user', {
-            method: 'GET',
-            credentials: "include",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (!data.user){
-                    navigate("/login");
-                } else {
-                    navigate(path);
-                }
-            });
+        // TODO: Uncomment this code when the backend is ready
+        navigate(path);
+
+        // fetch('http://localhost:5001/api/current_user', {
+        //     method: 'GET',
+        //     credentials: "include",
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        // })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         if (!data.user){
+        //             navigate("/login");
+        //         } else {
+        //             navigate(path);
+        //         }
+        //     });
     }
 
     return (
