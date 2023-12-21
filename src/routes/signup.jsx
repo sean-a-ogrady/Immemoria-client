@@ -75,8 +75,10 @@ function SignUpPage() {
              }),
         })
             .then(response => {
+                console.log(response)
                 if (!response.ok) {
-                    throw new Error('Signup failed');
+                    const errorType = response.status === 409 ? 'Username or email already exists.' : 'Signup failed.';
+                    throw new Error(errorType);
                 }
                 return response.json();
             })
@@ -93,7 +95,7 @@ function SignUpPage() {
         <div className="flex flex-col items-center justify-center min-h-[calc(100vh-72px)] bg-light-background dark:bg-dark-background text-center px-4">
             <div className="flex flex-col items-center justify-center space-y-6">
                 <h1 className="text-4xl font-bold text-light-primary-text dark:text-dark-primary-text">
-                    Sign Up for Immemoria
+                    Sign Up for <em>Immemoria</em>
                 </h1>
     
                 {/* Username Input and Validation Messages */}
@@ -104,7 +106,7 @@ function SignUpPage() {
                     onChange={handleUsernameChange}
                     onFocus={() => setFieldFocus({ ...fieldFocus, username: true })}
                     onBlur={() => setFieldFocus({ ...fieldFocus, username: false })}
-                    className="w-full max-w-xs px-4 py-2 border border-light-primary-text dark:border-dark-primary-text rounded-md focus:outline-none focus:ring-2 focus:ring-dark-accent"
+                    className="w-full max-w-xs px-4 py-2 border border-light-primary-text dark:bg-dark-background dark:text-dark-primary-text dark:border-dark-primary-text rounded-md focus:outline-none focus:ring-2 focus:ring-dark-accent"
                 />
                 {fieldFocus.username && (
                     <>
@@ -125,7 +127,7 @@ function SignUpPage() {
                     onChange={handleEmailChange}
                     onFocus={() => setFieldFocus({ ...fieldFocus, email: true })}
                     onBlur={() => setFieldFocus({ ...fieldFocus, email: false })}
-                    className="w-full max-w-xs px-4 py-2 border border-light-primary-text dark:border-dark-primary-text rounded-md focus:outline-none focus:ring-2 focus:ring-dark-accent"
+                    className="w-full max-w-xs px-4 py-2 border border-light-primary-text dark:bg-dark-background dark:text-dark-primary-text dark:border-dark-primary-text rounded-md focus:outline-none focus:ring-2 focus:ring-dark-accent"
                 />
                 {fieldFocus.email && (
                     <>
@@ -146,7 +148,7 @@ function SignUpPage() {
                     onChange={handlePasswordChange}
                     onFocus={() => setFieldFocus({ ...fieldFocus, password: true })}
                     onBlur={() => setFieldFocus({ ...fieldFocus, password: false })}
-                    className="w-full max-w-xs px-4 py-2 border border-light-primary-text dark:border-dark-primary-text rounded-md focus:outline-none focus:ring-2 focus:ring-dark-accent"
+                    className="w-full max-w-xs px-4 py-2 border border-light-primary-text dark:bg-dark-background dark:text-dark-primary-text dark:border-dark-primary-text rounded-md focus:outline-none focus:ring-2 focus:ring-dark-accent"
                 />
                 {fieldFocus.password && (
                     <>
@@ -173,7 +175,7 @@ function SignUpPage() {
                     onChange={handleConfirmPasswordChange}
                     onFocus={() => setFieldFocus({ ...fieldFocus, confirmPassword: true })}
                     onBlur={() => setFieldFocus({ ...fieldFocus, confirmPassword: false })}
-                    className="w-full max-w-xs px-4 py-2 border border-light-primary-text dark:border-dark-primary-text rounded-md focus:outline-none focus:ring-2 focus:ring-dark-accent"
+                    className="w-full max-w-xs px-4 py-2 border border-light-primary-text dark:bg-dark-background dark:text-dark-primary-text dark:border-dark-primary-text rounded-md focus:outline-none focus:ring-2 focus:ring-dark-accent"
                 />
                 {fieldFocus.confirmPassword && (
                     <p className={`text-${confirmPasswordMatch ? 'green' : 'red'}-500`}>
