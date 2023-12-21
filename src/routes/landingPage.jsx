@@ -1,11 +1,20 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import { url } from '../main';
 
 function LandingPage() {
     const navigate = useNavigate();
 
     const startGame = () => {
-        navigate('/play'); // Update with the actual route to start the game
+        fetch('http://localhost:5001/api/current_user')
+            .then(response => response.json())
+            .then(data => {
+                if (!data.user){
+                    navigate("/login");
+                } else {
+                    navigate('/play');
+                }
+            });
     };
 
     return (

@@ -1,12 +1,25 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Disclosure } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon, ChevronLeftIcon, ChevronRightIcon, ChevronUpIcon, ChevronDownIcon, Cog6ToothIcon, PaperAirplaneIcon } from '@heroicons/react/24/outline';
 import ChatMessage from '../components/chatMessage';
 import SidebarSection from '../components/sidebarSection';
 import initializationOptions from '../assets/initialization_options.json';
-
+import { url } from '../main';
 
 export default function GameInterface() {
+
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        fetch('http://localhost:5001/api/current_user')
+        .then(response => response.json)
+        .then(data => {
+            if (!data.user) {
+                navigate('/login');
+            }
+        })
+    }, [])
 
     // messages: An array that holds all chat messages.
     const [messages, setMessages] = useState([]);
@@ -133,7 +146,7 @@ export default function GameInterface() {
         // For now, this will reset the conversation history
         setMessages([]);
         setSummary([]);
-        fetch('http://localhost:5000/ai/reset', {
+        fetch(url+'/ai/reset', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -181,7 +194,7 @@ export default function GameInterface() {
             });
 
             // Get example AI response
-            fetch('http://localhost:5000/ai', {
+            fetch(url+'/ai', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
